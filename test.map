@@ -1,0 +1,11 @@
+5
+room 2 2
+##start
+start 1 1
+mid 3 3
+##end
+fin 4 4
+2-1
+2-3
+1-4
+3-4
