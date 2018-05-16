@@ -6,7 +6,7 @@
 #    By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/14 16:17:39 by mmanley           #+#    #+#              #
-#    Updated: 2018/05/14 19:36:18 by mmanley          ###   ########.fr        #
+#    Updated: 2018/05/16 18:07:22 by mmanley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,12 @@ WHITE = \x1b[0m
 SRCS =	main.c\
 		ft_get_info.c\
 		ft_init_lsts.c\
+		ft_get_links.c\
+		ft_checks.c\
+		functions.c\
+		ft_debugs.c\
+		ft_ants_check.c\
+		ft_coment_checks.c\
 
 OBJS = $(SRCS:%.c=%.o)
 

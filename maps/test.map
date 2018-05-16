@@ -1,0 +1,20 @@
+#Testring
+#Or not
+#
+698563
+2 2 2
+##start
+1 1 1
+#coment1
+3 3 3
+##end
+4 4 4
+2-1
+2-3
+1-2
+5 5 5
+#coment2
+1-4
+1-3
+4-2
+#Same coor between rooms not good / Can't start with L / New room in middle of links
