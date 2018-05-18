@@ -6,7 +6,7 @@
 #    By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/14 16:17:39 by mmanley           #+#    #+#              #
-#    Updated: 2018/05/16 18:07:22 by mmanley          ###   ########.fr        #
+#    Updated: 2018/05/18 11:32:37 by mmanley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,32 +26,58 @@ GREEN = \x1b[32m
 
 WHITE = \x1b[0m
 
-SRCS =	main.c\
-		ft_get_info.c\
-		ft_init_lsts.c\
-		ft_get_links.c\
-		ft_checks.c\
-		functions.c\
-		ft_debugs.c\
-		ft_ants_check.c\
-		ft_coment_checks.c\
+OBJ_PATH = objs/
 
-OBJS = $(SRCS:%.c=%.o)
+SRCS =	main.c\
+		pars/ft_get_info.c\
+		pars/ft_init_lsts.c\
+		pars/ft_get_links.c\
+		pars/ft_ants_check.c\
+		pars/ft_coment_checks.c\
+		files/ft_checks.c\
+		files/functions.c\
+		files/ft_debugs.c\
+
+
+OBJS_BASE = $(SRCS:%.c=%.o)
+
+OBJS = $(addprefix $(OBJ_PATH), $(OBJS_BASE))
 
 all : $(LIB) $(NAME)
 
-$(NAME) : $(OBJS)
-	@gcc -o $@ $(OBJS) $(LIB_PATH)/$(LIB) -I $(LIB_PATH)/$(INC)
+$(NAME) : objs $(OBJS)
+	@gcc -o $@ $(OBJS) $(LIB_PATH)/$(LIB) -I $(LIB_PATH)/$(INC) -I ./
 	@echo "${WHITE}Lem-in			${GREEN}DONE${WHITE}"
 
 $(LIB) :
 	@make -C $(LIB_PATH)
 
-%.o: %.c
-	@gcc -o $@ -c $< -I $(LIB_PATH)/$(INC)
+objs :
+	@mkdir -p objs
+	@mkdir -p objs/files
+	@mkdir -p objs/pars
+
+$(OBJ_PATH)%.o: %.c
+	@gcc -o $@ -c $< -I $(LIB_PATH)/$(INC) -I ./
+
+errors: $(NAME)
+	@echo "${RED}NO COMANDS${WHITE}"
+	./lem-in < maps/errors/no_cmds.map
+	@echo "${RED}WRONG ROOM NAME${WHITE}"
+	./lem-in < maps/errors/l_room_name.map
+	@echo "${RED}WRONG ROOM PLACEMENT${WHITE}"
+	./lem-in < maps/errors/new_room_after_links.map
+	@echo "${RED}NO ANTS${WHITE}"
+	./lem-in < maps/errors/no_ants.map
+
+valid: $(NAME)
+	@echo "${GREEN}BASIC TEST${WHITE}"
+	./lem-in < maps/valid_simple/test.map
+	@echo "${GREEN}NEW COMANDS${WHITE}"
+	./lem-in < maps/valid_simple/new_cd.map
 
 clean :
-	@rm $(OBJS)
+	@rm -rf $(OBJS) objs
 	@cd $(LIB_PATH) && $(MAKE) clean
 	@echo "${WHITE}Lem-in objs		${RED}DEL${WHITE}"
 

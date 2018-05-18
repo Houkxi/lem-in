@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 17:48:09 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/16 18:46:48 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/18 11:15:34 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ int					ft_check_validity(char *s)
 	return (0);
 }
 
-
-t_map		*get_ants(t_map *ants, char *line)
+t_map				*get_ants(t_map *ants, char *line)
 {
 	if (!line || !*line || (ft_check_validity(line)) == -1)
 	{
@@ -56,9 +55,9 @@ t_map		*get_ants(t_map *ants, char *line)
 	return (ants);
 }
 
-t_map		*checking_ants(t_map *ants, char **line, int *ct, int fd)
+t_map				*checking_ants(t_map *ants, char **line, int *ct, int fd)
 {
-	char	*new;
+	char			*new;
 
 	new = *line;
 	if (*ct == 0 && *line[0] != '#')

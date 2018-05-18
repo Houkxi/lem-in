@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:37:14 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/16 14:37:28 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/18 11:13:05 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void		ft_print_links(t_room *rooms)
 		ft_printf("-->%02d-[%s]", y, links[y]->name);
 		y++;
 	}
-		ft_printf("\n");
+	ft_printf("\n");
 }
 
-void	ft_print_rooms(t_room *rooms, int details)
+void		ft_print_rooms(t_room *rooms, int details)
 {
-	int i;
-	int y;
+	int		i;
+	int		y;
 
 	i = 0;
 	y = 0;

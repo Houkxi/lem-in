@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 17:37:37 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/16 18:19:05 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/18 11:20:59 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ typedef struct		s_room
 }					t_room;
 
 int					ft_get_info(t_map **ants, t_room **rooms, int fd);
-t_room				*ft_init_room(char **info, int role, int i, t_room *new_room);
+t_room				*ft_init_room(char **info, int role, int i, t_room *nw_r);
 void				ft_print_rooms(t_room *rooms, int details);
 void				ft_print_links(t_room *rooms);
-t_room				*get_links(t_room *rooms, char *line);
+t_room				*get_links(t_room *rooms, char **info);
 int					ft_check_validity(char *s);
 char				*ft_check_rooms(char *line, int *role, int fd);
 int					coments_everywhere(char *line);
@@ -47,5 +47,8 @@ t_map				*checking_ants(t_map *ants, char **line, int *ct, int fd);
 char				*comments(char *line, int fd);
 t_room				*our_link(t_room *rooms, char *line, int *ct);
 t_room				*the_room(t_room *rooms, char *line, int *ct, int fd);
+t_map				*get_ants(t_map *ants, char *line);
+char				*get_line_check(char *line, int fd);
+int					lst_check(t_room *rooms);
 
 #endif

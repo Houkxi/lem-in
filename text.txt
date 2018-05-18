@@ -1,0 +1,3 @@
+NEED to protect from a void file :
+	status --> Segfault
+In ft_init_links change the malloc to a dynamic system
