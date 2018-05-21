@@ -6,7 +6,7 @@
 #    By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/14 16:17:39 by mmanley           #+#    #+#              #
-#    Updated: 2018/05/18 11:32:37 by mmanley          ###   ########.fr        #
+#    Updated: 2018/05/21 13:33:34 by mmanley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 LIB = libft.a
 
-LIB_PATH = ~/libft
+LIB_PATH = ./libft
 
 INC = includes
 

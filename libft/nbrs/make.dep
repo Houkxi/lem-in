@@ -1,0 +1,8 @@
+SRCS += $(addprefix nbrs/, ft_dim.c\
+		ft_basic_op.c\
+		ft_max_min.c\
+		ft_sqr_root.c\
+		rec_nbr_count.c\
+		ft_rec_power.c\
+		ft_tabint_init.c\
+		ft_int_occ.c)
