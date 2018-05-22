@@ -14,29 +14,40 @@
 
 int		main(void)
 {
-	t_map	*ants;
+	t_map	*map;
 	t_room	*rooms;
 	t_room	*tmp;
+	t_path	*path;
+	int		i = 0;
 
-	ants = NULL;
+	map = NULL;
 	rooms = NULL;
-	if (ft_get_info(&ants, &rooms, 0) == -1)
+	path = NULL;
+	if (ft_get_info(&map, &rooms, 0) == -1)
 	{
 		write(2, "Error\n", 6);
 		return (0);
 	}
 	tmp = rooms;
-	ants->nb_r = ft_lstlen_test((t_room*)rooms) + 1;
+	map->nb_rooms = ft_lstlen_test((t_room*)rooms) + 1;
 	while (tmp)
 	{
 		if (tmp->role == 1)
 			break ;
 		tmp = tmp->next;
 	}
-	ants->strt = tmp;
-	ft_printf("ANT nb = %d, NB of R = %d, start Name : %s\n", ants->nb,\
-	ants->nb_r, ants->strt->name);
+	tmp->open = -1;
+	map->start = tmp;
+	ft_printf("ANT nb = %d, NB of R = %d, start Name : %s\n", map->ants,\
+	map->nb_rooms, map->start->name);
+	while (i < 10)
+	{
+		path = ft_add_path(map, path);
+		ft_printf("--------------PATH %02d------------\n", i++);
+		ft_print_path(path, i);
+		ft_printf("------------------------------\n");
+	}
+	//ft_printf("open = %d\n", path->links[1]->open);
 	ft_print_rooms(rooms, 1);
-	ft_printf("ENDING\n");
 	return (0);
 }

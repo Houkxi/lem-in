@@ -49,9 +49,9 @@ t_map				*get_ants(t_map *ants, char *line)
 	}
 	if (!(ants = (t_map*)malloc(sizeof(t_map))))
 		return (NULL);
-	ants->nb = ft_atoi(line);
-	ants->nb_r = 0;
-	ants->strt = NULL;
+	ants->ants = ft_atoi(line);
+	ants->nb_rooms = 0;
+	ants->start = NULL;
 	return (ants);
 }
 

@@ -37,7 +37,7 @@ SRCS =	main.c\
 		files/ft_checks.c\
 		files/functions.c\
 		files/ft_debugs.c\
-
+		path_finder.c\
 
 OBJS_BASE = $(SRCS:%.c=%.o)
 
@@ -75,6 +75,10 @@ valid: $(NAME)
 	./lem-in < maps/valid_simple/test.map
 	@echo "${GREEN}NEW COMANDS${WHITE}"
 	./lem-in < maps/valid_simple/new_cd.map
+
+mul : $(NAME)
+	@echo "${GREEN}MULTIPLE TEST${WHITE}"
+	./lem-in < maps/valid_simple/multiple_paths.map
 
 clean :
 	@rm -rf $(OBJS) objs

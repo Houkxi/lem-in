@@ -42,6 +42,7 @@ t_room			*ft_init_room(char **info, int role, int i, t_room *new_room)
 	}
 	new_room->role = role;
 	new_room->ant = 0;
+	new_room->open = 1;
 	new_room->next = NULL;
 	new_room->links = NULL;
 	new_room->nb_l = 0;

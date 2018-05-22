@@ -16,9 +16,9 @@
 
 typedef	struct		s_map
 {
-	int				nb;
-	int				nb_r;
-	struct s_room	*strt;
+	int				ants;
+	int				nb_rooms;
+	struct s_room	*start;
 }					t_map;
 typedef struct		s_room
 {
@@ -27,10 +27,18 @@ typedef struct		s_room
 	int				ant;
 	int				x;
 	int				y;
+	int				open;
 	int				nb_l;
 	struct s_room	**links;
 	struct s_room	*next;
 }					t_room;
+typedef struct		s_path
+{
+	struct s_room	**links;
+	int				size;
+	int				yes;
+	struct s_path	*next;
+}					t_path;
 
 int					ft_get_info(t_map **ants, t_room **rooms, int fd);
 t_room				*ft_init_room(char **info, int role, int i, t_room *nw_r);
@@ -50,5 +58,7 @@ t_room				*the_room(t_room *rooms, char *line, int *ct, int fd);
 t_map				*get_ants(t_map *ants, char *line);
 char				*get_line_check(char *line, int fd);
 int					lst_check(t_room *rooms);
+t_path 				*ft_add_path(t_map *map, t_path *path);
+void				ft_print_path(t_path *path, int nb);
 
 #endif
