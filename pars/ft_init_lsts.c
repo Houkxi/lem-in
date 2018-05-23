@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 19:22:28 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/23 11:25:39 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/23 19:01:37 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,19 @@ t_room			*ft_init_room(char **info, int role, int i, t_room *new_room)
 	new_room->link_chk = 0;
 	new_room->next = NULL;
 	new_room->links = NULL;
+	if (!(new_room->bridge = (t_room**)malloc(sizeof(t_room*) * 15)))
+		return (NULL);
 	new_room->nb_l = 0;
 	return (new_room);
+}
+
+t_path			*ft_init_path(t_path *new)
+{
+	if (!(new = (t_path*)malloc(sizeof(t_path))))
+		return (NULL);
+	new->links = NULL;
+	new->size = 0;
+	new->yes = 1;
+	new->next = NULL;
+	return (new);
 }

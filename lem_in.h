@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 17:37:37 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/23 11:20:42 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/23 15:35:03 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct		s_room
 	int				link_chk;
 	int				nb_l;
 	struct s_room	**links;
+	struct s_room	**bridge;
 	struct s_room	*next;
 }					t_room;
 typedef struct		s_path
@@ -61,5 +62,6 @@ char				*get_line_check(char *line, int fd);
 int					lst_check(t_room *rooms);
 t_path 				*ft_add_path(t_map *map, t_path *path);
 void				ft_print_path(t_path *path, int nb);
+t_path				*ft_init_path(t_path *new);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 16:17:40 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/23 10:58:56 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/23 19:04:50 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int		main(void)
 	ft_printf("ANT nb = %d, NB of R = %d, start Name : %s\n", map->ants,\
 	map->nb_rooms, map->start->name);
 	ft_print_rooms(rooms, 1);
-	while (i < 10)
+	while (i < 50)
 	{
 		path = ft_add_path(map, path);
-		ft_printf("--------------PATH %02d------------\n", i++);
+		ft_printf("********************PATH %02d*********************\n", i++);
 		ft_print_path(path, i);
-		ft_printf("------------------------------\n");
+		ft_printf("**************************************************\n\n\n");
 	}
 	//ft_printf("open = %d\n", path->links[1]->open);
 	return (0);
