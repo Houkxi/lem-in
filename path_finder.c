@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_finder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfavero <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cfavero <cfavero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 14:34:24 by cfavero           #+#    #+#             */
-/*   Updated: 2018/05/21 14:35:11 by cfavero          ###   ########.fr       */
+/*   Updated: 2018/05/23 11:40:51 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,6 @@ t_path  *ft_find_path(t_path *path, t_room *room)
 		ft_printf("Opening -> %s, %d\n", room->links[i -1]->name, room->links[i -1]->open);
 	}
 	ft_printf("MY CURR is %s  --> %d\n", room->links[i]->name, room->links[i]->open);
-	// if (path)
-	// {
-	// 	ft_printf("--------------PATh------------\n");
-	// 	ft_print_path(path, 1);
-	// 	ft_printf("------------------------------\n");
-	// }
 	while (room->links[i])
 	{
 		//ft_printf("find path Yolo while \n");
