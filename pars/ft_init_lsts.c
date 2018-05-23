@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 19:22:28 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/16 15:22:29 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/23 11:25:39 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_room			*ft_init_room(char **info, int role, int i, t_room *new_room)
 	new_room->role = role;
 	new_room->ant = 0;
 	new_room->open = 1;
+	new_room->link_chk = 0;
 	new_room->next = NULL;
 	new_room->links = NULL;
 	new_room->nb_l = 0;

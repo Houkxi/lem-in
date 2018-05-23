@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 17:37:37 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/18 11:20:59 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/23 11:20:42 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct		s_room
 	int				x;
 	int				y;
 	int				open;
+	int				link_chk;
 	int				nb_l;
 	struct s_room	**links;
 	struct s_room	*next;

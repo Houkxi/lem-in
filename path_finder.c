@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   path_finder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfavero <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cfavero <cfavero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 14:34:24 by cfavero           #+#    #+#             */
-/*   Updated: 2018/05/21 14:35:11 by cfavero          ###   ########.fr       */
+/*   Updated: 2018/05/23 11:36:32 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+int			ft_check_openess(t_room *room, int nb_l, t_room *past)
+{
+	int		i;
+
+	i = 0;
+	ft_printf("ft_check_openess\n");
+	if (!room || !room->links[0])
+		return (-1);
+	while (i < nb_l)
+	{
+		if (!(room->links[i]->open == -1 || room->links[i] == past))
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 t_path		*ft_close_path(t_path *path, t_path *new)
 {
@@ -57,36 +74,29 @@ t_path		*ft_copy_path(t_room **links, t_path *new, int size, int len)
 int     ft_check_around(t_path *path, t_room *room)
 {
 	int		i;
+	int		size;
 	t_room  *old_rooms;
 
 	i = 0;
+	size = path->size;
 	if (!path || !path->links || !path->links[i])
 		return (1);
 	old_rooms = path->links[i];
-	//ft_printf("find check 2, room -> [%s] -->%d \n", room->name, room->open);
+	ft_printf("find check, room -> [%s] -->%d \n", room->name, room->open);
 	if (room->open != 1 || room->role == 1)
 		return (-1);
-	//ft_printf("Y \n");
-	while (old_rooms)
+	while (old_rooms && size--)
 	{
-		//ft_printf("X \n");
-		// if (path)
-		// {
-		// 	ft_printf("-----PATh---\n");
-		// 	ft_print_path(path, 1);
-		// 	ft_printf("------------\n");
-		// }
+		// if (old_rooms && old_rooms->name)
+			// ft_printf("Old rooms --> %s\n", old_rooms->name);
 		if (old_rooms == room)
-		{
-			ft_printf("%s\n", old_rooms->name);
 			return (ft_error(-1, NULL, "already been here"));
-		}
 		old_rooms = path->links[i++];
 	}
 	return (ft_error(1, NULL, "CHECK AROUND GOOD"));
 }
 
-t_path  *ft_find_path(t_path *path, t_room *room)
+t_path  *ft_find_path(t_path *path, t_room *room, t_room *past)
 {
 	t_room  *tmp;
 	int     i;
@@ -104,19 +114,29 @@ t_path  *ft_find_path(t_path *path, t_room *room)
 	i = 0;
 	if (room->links[0]->role == 1)
 		i++;
-	while (room->links[i]->open == -1)
+	/*if (ft_check_openess(room, room->nb_l, past) == 0)
+	{
+		ft_printf("ALL CLOSED\n");
+		room->open = -1;
+		return (path);
+	}*/
+	while (room->links[i]->open == -1 || room->links[i] == past)
 	{
 		i++;
-		room->links[i - 1]->open = 1;
-		ft_printf("Opening -> %s, %d\n", room->links[i -1]->name, room->links[i -1]->open);
+		if (room->links[i - 1]->open == -1)
+		{
+			room->links[i - 1]->open = 1;
+			room->link_chk += 1;
+			ft_printf("Opening -> %s, %d ------- My room %s  link_chk = %d / %d = nb_l\n", room->links[i -1]->name, room->links[i -1]->open, room->name, room->link_chk, room->nb_l);
+			if (room->link_chk == room->nb_l)
+			{
+				ft_printf("ALL CLOSED\n");
+				room->open = -1;
+				return (path);
+			}
+		}
 	}
-	ft_printf("MY CURR is %s  --> %d\n", room->links[i]->name, room->links[i]->open);
-	// if (path)
-	// {
-	// 	ft_printf("--------------PATh------------\n");
-	// 	ft_print_path(path, 1);
-	// 	ft_printf("------------------------------\n");
-	// }
+	 ft_printf("MY CURR is %s  --> %d\n", room->links[i]->name, room->links[i]->open);
 	while (room->links[i])
 	{
 		//ft_printf("find path Yolo while \n");
@@ -124,13 +144,16 @@ t_path  *ft_find_path(t_path *path, t_room *room)
 		ft_printf("curr = %s\n", tmp->name);
 		//ft_printf("find Yolo whileeee \n");
 		if (ft_check_around(path, tmp) == 1)
+		{
+			ft_printf("BREAKING\n");
 			break;
+		}
 		//ft_printf("room open wasn't 1 \n");
 		i++;
 	}
-	ft_printf("Id end %d\n", i);
 	if (!room->links[i])
 	{
+		ft_printf("Id end %d\n", i);
 		path->yes = -1;
 		return(path);
 	}
@@ -143,7 +166,7 @@ t_path  *ft_find_path(t_path *path, t_room *room)
 	//path->links[path->size]->open = -1;
 	path->size += 1;
 	//ft_printf("find check X4896 \n");
-	return (ft_find_path(path, tmp));
+	return (ft_find_path(path, tmp, path->links[path->size - 2]));
 }
 
 t_path  *ft_add_path(t_map *map, t_path *path)
@@ -166,18 +189,18 @@ t_path  *ft_add_path(t_map *map, t_path *path)
 			path = path->next;
 		new = ft_copy_path(path->links, new, path->size - 1, map->nb_rooms);
 		path = ft_close_path(path, new);
-		ft_printf("\nAfter copy\n");
-		ft_print_path(new, 1);
-		ft_printf("Before find path\n\n");
+		// ft_printf("--------------PATH SENT------------\n");
+		// ft_print_path(path, 1);
+		// ft_printf("------------------------------\n");
 		ft_printf("Last sent -->%s\n", new->links[new->size - 1]->name);
-		new = ft_find_path(new, new->links[new->size - 1]);
+		new = ft_find_path(new, new->links[new->size - 1], new->links[new->size - 2]);
 		//ft_printf("Yolo 2 \n");
 		path->next = new;
 	}
 	else
 	{
 		//ft_printf("Yolo 3 \n");
-		path = ft_find_path(new, map->start);
+		path = ft_find_path(new, map->start, NULL);
 		//ft_printf("Yolo 4 \n");
 	}
 	return (path);
