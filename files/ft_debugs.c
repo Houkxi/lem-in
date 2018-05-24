@@ -51,40 +51,31 @@ void		ft_print_rooms(t_room *rooms, int details)
 
 void		ft_print_path(t_path *path_or, int nb)
 {
-	int i;
+	int		i;
 	int		size;
 	t_path	*path;
 
 	path = path_or;
 	while (path->next)
 		path = path->next;
-	// while (path && nb--)
-	// {
-		i = 0;
-		if (nb > 0)
-			ft_printf("Path size : %d\n", path->size);
-		else
-			ft_printf("--------------------------------------\n");
-		ft_printf("Path : ");
-		size = path->size;
-		while (size--)
-		{
-			ft_printf("[%s]",path->links[i]->name);
-			if (size > 0)
-				ft_printf("-->");
-			i++;
-		}
-		if (nb > 0)
-		{
-			if (path->yes == 1)
-				ft_printf("\nValid path\n");
-			else
-				ft_printf("\nNon valid path\n");
-			return ;
-		}
-		else
-			ft_printf("\n--------------------------------------\n");
-		// path = path->next;
-	// }
+	if (path->yes != 1)
+		return ;
+	i = 0;
+	ft_printf("--------------------------------------\n");
+	ft_printf("Path size : %d\n", path->size);
+	ft_printf("Path : ");
+	size = path->size;
+	while (size--)
+	{
+		ft_printf("[%s]",path->links[i]->name);
+		if (size > 0)
+			ft_printf("-->");
+		i++;
+	}
+	ft_printf("\n--------------------------------------\n");
+}
 
+void		ft_order_path(t_path *path)
+{
+	
 }

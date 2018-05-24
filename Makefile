@@ -20,6 +20,8 @@ LIB_PATH = ./libft
 
 INC = includes
 
+FSAN = -fsanitize=address -g3
+
 RED = \x1b[31m
 
 GREEN = \x1b[32m
@@ -46,7 +48,7 @@ OBJS = $(addprefix $(OBJ_PATH), $(OBJS_BASE))
 all : $(LIB) $(NAME)
 
 $(NAME) : objs $(OBJS)
-	@gcc -o $@ $(OBJS) $(LIB_PATH)/$(LIB) -I $(LIB_PATH)/$(INC) -I ./
+	@gcc -o $@ $(OBJS) $(LIB_PATH)/$(LIB) -I $(LIB_PATH)/$(INC) -I ./ $(CFLAGS)
 	@echo "${WHITE}Lem-in			${GREEN}DONE${WHITE}"
 
 $(LIB) :
