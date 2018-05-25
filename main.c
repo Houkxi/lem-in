@@ -12,19 +12,42 @@
 
 #include "lem_in.h"
 
+void	ft_true_add_path(t_path **alst, t_path *new)
+{
+	t_path *tmp;
+
+	ft_printf("alst : [%p], new : [%p]\n", *alst, new);
+	if (alst && new)
+	{
+		if (*alst)
+		{
+			ft_printf("AADD it bitch :)\n");
+			tmp = *alst;
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new;
+		}
+	}
+}
+
 void		ft_free_path(t_path *path_or)
 {
 	t_path	*path;
 
 	path = path_or;
+	ft_print_current_path(path);
 	if (path)
 	{
-		ft_printf("I'm going to free shit or libero lo stronzo\n");
-		while (path->next && path->yes != -1)
+		if (path->yes == 1)
+			ft_printf("This is valid not going to free it :)\n");
+		else
+			ft_printf("I'm going to free this shit :)\n");
+		ft_printf("[%p], [%p]\n", path, path->next);
+		/*while (path->next && path->yes != -1)
 		{
 			ft_printf("[%p], [%p], [%p]\n", path, path->next, path->next->next);
 			path = path->next;
-		}
+		}*/
 		if (path->yes == -1)
 		{
 			ft_printf("-path is non valid\n");
@@ -34,6 +57,7 @@ void		ft_free_path(t_path *path_or)
 				ft_printf("-after setting the links to NULL\n");
 				path->links[path->size] = NULL;
 			}
+			ft_printf("Path size : %d\n", path->size);
 			path->size = 0;
 			free(path->links);
 			path->links = NULL;
@@ -42,6 +66,7 @@ void		ft_free_path(t_path *path_or)
 			ft_printf("-freeing path\n");
 			path->next = NULL;
 			path = NULL;
+			ft_printf("-path freed**************\n");
 		}
 	}
 }
@@ -52,11 +77,12 @@ int		main(void)
 	t_room	*rooms;
 	t_room	*tmp;
 	t_path	*path;
+	t_path	*first_path;
 	int		i = 0;
 
 	map = NULL;
 	rooms = NULL;
-	path = NULL;
+	first_path = NULL;
 	if (ft_get_info(&map, &rooms, 0) == -1)
 	{
 		write(2, "Error\n", 6);
@@ -77,25 +103,36 @@ int		main(void)
 	// ft_print_rooms(rooms, 1);
 	// path = ft_add_path(map, path);
 	// while (path->size != -1)
-		// path = ft_add_path(map, path);
 	while (i < 83)
 	{
-		path = ft_add_path(map, path);
-		// ft_free_path(path);
+		ft_printf("SO ...\n");
+		path = ft_add_path(map, first_path);
+		if (!first_path)
+		{
+			ft_printf("New first_path\n");
+			first_path = path;
+		}
+		else
+		{
+			ft_printf("Add to first_path\n");
+			ft_true_add_path(&first_path, path);
+		}
 		if (path->size == -1)
 		{
 			ft_printf("ALLORA SEI STRONZO!!\n\n\n");
-			ft_printf("LIBERO LO STRONZO!!\n\n\n");
 			break;
 		}
 		// ft_printf("********************PATH %02d*********************\n", i++);
 		// ft_printf("Size outside: %d\n", path->size);
 		i++;
-		ft_print_path(path, i);
+		ft_print_current_path(path);
+		//ft_free_path(path);
 		// ft_printf("%d\n", i);
 		// ft_printf("**************************************************\n\n\n");
 	}
-	ft_printf("!!!!!!!!!!!!!!!!!!!!!\nI WAS to tired to find the problem || to stupid T.T\nBut I think our list of paths isn't really a list\nWe always give back the last as the first one\n");
+	// ft_print_path(path, -1);
+	// ft_free_path(path);
+	// ft_printf("!!!!!!!!!!!!!!!!!!!!!\nI WAS to tired to find the problem || to stupid T.T\nBut I think our list of paths isn't really a list\nWe always give back the last as the first one\n");
 	// ft_order_path(path);
 	//ft_printf("open = %d\n", path->links[1]->open);
 	return (0);

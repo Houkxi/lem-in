@@ -56,13 +56,21 @@ void		ft_print_path(t_path *path_or, int nb)
 	t_path	*path;
 
 	path = path_or;
-	while (path->next)
-		path = path->next;
-	if (path->yes != 1)
-		return ;
+	// if (nb != -1)
+	// {
+	ft_printf("FUCK you!!\n");
+		while (path->next)
+		{
+			ft_printf("%p\n%p\n",path, path->next);
+			path = path->next;
+		}
+		if (path->yes != 1)
+			return ;
+	// }
 	i = 0;
 	ft_printf("--------------------------------------\n");
 	ft_printf("Path size : %d\n", path->size);
+	ft_printf("Path->yes : %d\n", path->yes);
 	ft_printf("Path : ");
 	size = path->size;
 	while (size--)
@@ -75,7 +83,28 @@ void		ft_print_path(t_path *path_or, int nb)
 	ft_printf("\n--------------------------------------\n");
 }
 
+void		ft_print_current_path(t_path *path)
+{
+	int		i;
+	int		size;
+
+	ft_printf("*************************************\n");
+	ft_printf("Path size : %d\n", path->size);
+	ft_printf("Path->yes : %d\n", path->yes);
+	ft_printf("Path : ");
+	size = path->size;
+	i = 0;
+	while (size--)
+	{
+		ft_printf("[%s]",path->links[i]->name);
+		if (size > 0)
+			ft_printf("-->");
+		i++;
+	}
+	ft_printf("\n**********************************\n");
+}
+
 void		ft_order_path(t_path *path)
 {
-	
+
 }

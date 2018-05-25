@@ -108,24 +108,24 @@ int     ft_check_around(t_path *path, t_room *room)
 		//ft_printf("- current room is the first\n");
 		return (-1);
 	}*/
-	ft_print_path(path, 1);
+	// ft_print_path(path, 1);
 	while (old_rooms && size--)
 	{
-		// ft_printf("ciao 3 3\n");
-		ft_printf("old rooms [%p]\n", old_rooms);
-		// ft_printf("old rooms name [%s]\n", old_rooms->name);
-		ft_printf("old rooms [%s] room [%s]\n", old_rooms->name, room->name);
+		//ft_printf("ciao 3 3\n");
+		//ft_printf("old rooms [%p]\n", old_rooms);
+		//ft_printf("old rooms name [%s]\n", old_rooms->name);
+		//ft_printf("old rooms [%s] room [%s]\n", old_rooms->name, room->name);
 		if (old_rooms == room)
 		{
-			ft_printf("- we have already been in this room\n");
+			//ft_printf("- we have already been in this room\n");
 			return (-1);
 		}
-		// ft_printf("ciao\n");
+		//ft_printf("ciao\n");
 		old_rooms = path->links[++i];
-		// ft_printf("ciao---\n");
+		//ft_printf("ciao---\n");
 	}
-	ft_printf("old rooms [%p]\n", old_rooms);
-	ft_printf("usciamo?\n");
+	//ft_printf("old rooms [%p]\n", old_rooms);
+	//ft_printf("usciamo?\n");
 	return (1);
 }
 
@@ -153,9 +153,9 @@ t_path  *ft_find_path(t_path *path, t_room *room, int nb_rooms)
 	{
 		if (room->role != -1)
 		{
-			// ft_printf("The room [%s] doesn't have links anymore\n", room->name);
+			//ft_printf("The room [%s] doesn't have links anymore\n", room->name);
 			room = ft_open_bridges(room);
-			// ft_printf("--------Opening room [%s]\n", room->name);
+			//ft_printf("--------Opening room [%s]\n", room->name);
 			path->yes = -1;
 		}
 		// //ft_printf("are we here?\n");
@@ -176,13 +176,13 @@ t_path  *ft_find_path(t_path *path, t_room *room, int nb_rooms)
 	}
 	if (i == room->nb_l)
 	{
-		// ft_printf("We checked all the links of [%s] --> FAIL\n", room->name);
+		//ft_printf("We checked all the links of [%s] --> FAIL\n", room->name);
 		room = ft_open_bridges(room);
-		// ft_printf("--------Opening room [%s]\n", room->name);
+		//ft_printf("--------Opening room [%s]\n", room->name);
 		path->yes = -1;
 		if (room->role == 1)
 		{
-			// ft_printf("We are over!\n");
+			//ft_printf("We are over!\n");
 			path->size = -1;
 			return (path);
 		}
@@ -204,20 +204,28 @@ t_path  *ft_add_path(t_map *map, t_path *path)
 	t_path 	*new;
 	int		len;
 
+	ft_printf("Do we get here?\n");
 	if (!(new = ft_init_path(new)))
 		return (NULL);
+	ft_printf("Just initialized\n");
 	if (path)
 	{
 		while (path->next)
+		{
+			ft_printf("%p\n%p\nW--------%p\n",path, path->next, new->next);
 			path = path->next;
+			break;
+		}
 			//ft_printf("Size : %d\n", path->size);
 		new = ft_copy_path(path->links, new, path->size - 1, map->nb_rooms);
 		path = ft_close_path(path, new);
 		new = ft_find_path(new, new->links[new->size - 1], map->nb_rooms);
+		ft_printf("%p\nNEW--------%p\n",path, new->next);
 		path->next = new;
 		//ft_printf("New size after add path: %d\n", new->size);
 		//ft_printf("Path size after add path: %d\n", path->size);
 		path = path->next;
+		ft_printf("%p\nW--------%p\n",path->next, new->next);
 		//ft_printf("Path new size after add path: %d\n", path->size);
 	}
 	else

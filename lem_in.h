@@ -62,6 +62,7 @@ char				*get_line_check(char *line, int fd);
 int					lst_check(t_room *rooms);
 t_path 				*ft_add_path(t_map *map, t_path *path);
 void				ft_print_path(t_path *path, int nb);
+void				ft_print_current_path(t_path *path);
 t_path				*ft_init_path(t_path *new);
 
 #endif
