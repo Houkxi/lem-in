@@ -56,17 +56,18 @@ void		ft_print_path(t_path *path_or, int nb)
 	t_path	*path;
 
 	path = path_or;
-	// if (nb != -1)
-	// {
-	ft_printf("FUCK you!!\n");
+	// ft_printf("Printing path!!\n");
 		while (path->next)
 		{
-			ft_printf("%p\n%p\n",path, path->next);
 			path = path->next;
+			// ft_printf("1--%p\n2--%p\n",path, path->next);
+			// ft_printf("Hey\n");
 		}
 		if (path->yes != 1)
+		{
+			// ft_printf("Path not good\n");
 			return ;
-	// }
+		}
 	i = 0;
 	ft_printf("--------------------------------------\n");
 	ft_printf("Path size : %d\n", path->size);

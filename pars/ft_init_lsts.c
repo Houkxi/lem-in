@@ -25,6 +25,8 @@ t_room			*coord_check(t_room *room, char **info, int i)
 
 t_room			*ft_init_room(char **info, int role, int i, t_room *new_room)
 {
+	int len = 15;
+
 	if (!(new_room = (t_room*)malloc(sizeof(t_room))))
 		return (NULL);
 	while (info[i])
@@ -46,8 +48,10 @@ t_room			*ft_init_room(char **info, int role, int i, t_room *new_room)
 	new_room->link_chk = 0;
 	new_room->next = NULL;
 	new_room->links = NULL;
-	if (!(new_room->bridge = (t_room**)malloc(sizeof(t_room*) * 15)))
+	if (!(new_room->bridge = (t_room**)malloc(sizeof(t_room*) * len)))
 		return (NULL);
+	while (len--)
+		new_room->bridge[len] = NULL;
 	new_room->nb_l = 0;
 	return (new_room);
 }

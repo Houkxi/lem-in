@@ -12,7 +12,7 @@
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
-# include "libft.h"
+# include "printf/ft_printf.h"
 
 typedef	struct		s_map
 {
@@ -42,6 +42,7 @@ typedef struct		s_path
 	struct s_path	*next;
 }					t_path;
 
+int					ft_free_path(t_path **path, int nb);
 int					ft_get_info(t_map **ants, t_room **rooms, int fd);
 t_room				*ft_init_room(char **info, int role, int i, t_room *nw_r);
 void				ft_print_rooms(t_room *rooms, int details);

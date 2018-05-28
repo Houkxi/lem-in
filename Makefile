@@ -14,11 +14,11 @@ NAME = lem-in
 
 CFLAGS = -Wall -Wextra -Werror
 
-LIB = libft.a
+LIB = libftprintf.a
 
-LIB_PATH = ./libft
+LIB_PATH = ./printf
 
-INC = includes
+INC = printf
 
 FSAN = -fsanitize=address -g3
 
@@ -48,7 +48,7 @@ OBJS = $(addprefix $(OBJ_PATH), $(OBJS_BASE))
 all : $(LIB) $(NAME)
 
 $(NAME) : objs $(OBJS)
-	@gcc -o $@ $(OBJS) $(LIB_PATH)/$(LIB) -I $(LIB_PATH)/$(INC) -I ./ $(CFLAGS)
+	@gcc -o $@ $(OBJS) $(LIB_PATH)/$(LIB) -I $(LIB_PATH)/ -I ./ $(CFLAGS)
 	@echo "${WHITE}Lem-in			${GREEN}DONE${WHITE}"
 
 $(LIB) :
@@ -83,13 +83,13 @@ mul : $(NAME)
 	./lem-in < maps/valid_simple/multiple_paths.map
 
 clean :
-	@rm -rf $(OBJS) objs
+	@git rm -rf $(OBJS) objs
 	@cd $(LIB_PATH) && $(MAKE) clean
 	@echo "${WHITE}Lem-in objs		${RED}DEL${WHITE}"
 
 fclean : clean
 	@cd $(LIB_PATH) && $(MAKE) fclean
-	@rm $(NAME)
+	@rm -f $(NAME)
 	@echo "${WHITE}Lem-in status		${RED}DEL${WHITE}"
 
 re : fclean all

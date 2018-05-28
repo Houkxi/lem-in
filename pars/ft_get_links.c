@@ -38,12 +38,17 @@ int			check_link_name(t_room *rooms, char *link)
 t_room		*ft_init_links(char *info, t_room **links, t_room *room, t_room *l)
 {
 	int		i;
+	int		len = 15;
 	t_room	*tmp;
 
 	i = room->nb_l;
 	if (!links)
-		if (!(links = (t_room**)malloc(sizeof(t_room*) * 10)))
+	{
+		if (!(links = (t_room**)malloc(sizeof(t_room*) * len)))
 			return (NULL);
+		while (--len)
+			links[len] = NULL;
+	}
 	tmp = l;
 	while (tmp)
 	{
