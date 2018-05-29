@@ -6,7 +6,7 @@
 /*   By: cfavero <cfavero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 14:34:24 by cfavero           #+#    #+#             */
-/*   Updated: 2018/05/29 14:46:53 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/29 20:18:20 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,7 @@ int     ft_check_around(t_path *path, t_room *room)
 	while (old_rooms && size--)
 	{
 		if (old_rooms == room)
-		{
 			return (-1);
-		}
 		old_rooms = path->links[++i];
 	}
 	return (1);
@@ -190,12 +188,18 @@ t_path  *ft_add_path(t_map *map, t_path *path)
 			return (NULL);
 		if (!(path = ft_close_path(path, new)))
 			return (NULL);
-		if (map->path_size > 0 && map->path_size < path->size)
-			path->yes = -1;
-		else
-			map->path_size = path->size;
+		 ft_printf("Path->yes = %d\n", path->yes);
+		if (path && path->yes > 0)
+		{
+			if (map->path_size > 0 && map->path_size < path->size)
+				path->yes = -1;
+			else
+				map->path_size = path->size;
+		}
+		// ft_printf("Path->size = %d, Min path_size = %d\n", path->size, map->path_size);
 		if ((ft_free_path(&first, 0)) == 0)
 			path = NULL;
+		// ft_printf("After free\n");
 		if (!(new = ft_find_path(new, new->links[new->size - 1], map->nb_rooms)))
 			return (NULL);
 		if (path)

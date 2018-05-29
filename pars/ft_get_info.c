@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 18:01:14 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/29 13:28:20 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/29 20:23:25 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_room		*the_room(t_room *rooms, char *line, int *ct, int fd)
 	role = 0;
 	if (*ct == 1 && ft_occ_pos(line, ' ') != -1)
 	{
-		ft_printf("ROOM ->LINES : %s\n", line);
+		// ft_printf("ROOM ->LINES : %s\n", line);
 		if (!(line = ft_check_rooms(line, &role, fd)))
 			return (NULL);
 		if (!(rooms = get_room(rooms, line, &role)))
@@ -95,7 +95,7 @@ int			ft_get_info(t_map **ants, t_room **rooms, int fd)
 		}
 		else if (ct == 1 && !(ft_occ_pos(line, ' ') == -1 && line[0] != '#'))
 		{
-			ft_printf("ROOM : LINES : %s\n", line);
+			// ft_printf("ROOM : LINES : %s\n", line);
 			if (!(line = ft_check_rooms(line, &role, fd)))
 				return (ft_error_str(-1, NULL, "Freeing line if error"));
 			if (!(*rooms = get_room(*rooms, line, &role)))
@@ -104,7 +104,7 @@ int			ft_get_info(t_map **ants, t_room **rooms, int fd)
 		else
 		{
 			ct++;
-			ft_printf("LINK : LINES : %s\n", line);
+			// ft_printf("LINK : LINES : %s\n", line);
 			if (!(*rooms = our_link(*rooms, line, &ct)))
 				return (ft_error_str(-1, NULL, "Freeing line if error"));
 		}

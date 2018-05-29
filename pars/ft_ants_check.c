@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 17:48:09 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/29 13:38:26 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/29 16:09:30 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int					ft_check_validity(char *s)
 
 	x = 0;
 	ct = ft_strlen(s);
-	if (ft_atoi(&s[x]) <= 0)
+	if (ft_atoi(&s[x]) < 0)
 		return (-1);
 	if (s[x])
 	{

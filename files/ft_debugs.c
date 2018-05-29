@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:37:14 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/23 17:13:40 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/29 16:17:43 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,28 +60,32 @@ void		ft_print_path(t_path *path_or, int nb)
 		while (path->next)
 		{
 			path = path->next;
-			// ft_printf("1--%p\n2--%p\n",path, path->next);
-			// ft_printf("Hey\n");
+		// 	// ft_printf("1--%p\n2--%p\n",path, path->next);
+		// 	// ft_printf("Hey\n");
 		}
-		if (path->yes != 1)
+		// if (path->yes != 1)
+		// {
+		// 	ft_printf("Path not good\n");
+		// 	return ;
+		// }
+	// while (path->next)
+	// {
+		i = 0;
+		ft_printf("--------------------------------------\n");
+		ft_printf("Path size : %d\n", path->size);
+		ft_printf("Path->yes : %d\n", path->yes);
+		ft_printf("Path : ");
+		size = path->size;
+		while (size--)
 		{
-			// ft_printf("Path not good\n");
-			return ;
+			ft_printf("[%s]",path->links[i]->name);
+			if (size > 0)
+				ft_printf("-->");
+			i++;
 		}
-	i = 0;
-	ft_printf("--------------------------------------\n");
-	ft_printf("Path size : %d\n", path->size);
-	ft_printf("Path->yes : %d\n", path->yes);
-	ft_printf("Path : ");
-	size = path->size;
-	while (size--)
-	{
-		ft_printf("[%s]",path->links[i]->name);
-		if (size > 0)
-			ft_printf("-->");
-		i++;
-	}
-	ft_printf("\n--------------------------------------\n");
+		ft_printf("\n--------------------------------------\n");
+	// 	path = path->next;
+	// }
 }
 
 void		ft_print_current_path(t_path *path)

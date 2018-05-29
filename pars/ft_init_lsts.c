@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 19:22:28 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/23 19:01:37 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/29 16:09:36 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 t_room			*coord_check(t_room *room, char **info, int i)
 {
-	if (ft_check_validity(info[1]) == -1 || ft_check_validity(info[2]) == -1)
-		return (ft_room_error(NULL, NULL, "Error in coordonates"));
+	ft_printf("%s\n%s\n", info[1], info[2]);
+	/*if (ft_check_validity(info[1]) == -1 || ft_check_validity(info[2]) == -1)
+		return (ft_room_error(NULL, NULL, "Error in coordonates"));*/
 	if (i == 1)
 		room->x = ft_atoi(info[i]);
 	if (i == 2)

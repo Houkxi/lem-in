@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 13:22:13 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/23 19:06:34 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/29 20:20:31 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,18 @@ t_room		*get_links(t_room *rooms, char **info)
 
 	tmp = rooms;
 	i = 0;
+	if (check_link_name(rooms, info[i]) == -1)
+	{
+		ft_printf("Problem test\n\n");
+		return (ft_room_error(NULL, info, "Wrong link name, LEARN HOW!!!"));
+	}
+	if (check_link_name(rooms, info[i + 1]) == -1)
+	{
+		ft_printf("Problem test\n\n");
+		return (ft_room_error(NULL, info, "Wrong link name, LEARN HOW!!!"));
+	}
 	while (tmp)
 	{
-		if (check_link_name(rooms, info[i]) == -1)
-		{
-			ft_printf("Problem test\n\n");
-			return (ft_room_error(NULL, info, "Wrong link name, LEARN HOW!!!"));
-		}
 		if (ft_strcmp(tmp->name, info[i]) == 0 && i < 2)
 		{
 			if (!(tmp = ft_init_links(info[1 - i], tmp->links, tmp, rooms)))

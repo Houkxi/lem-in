@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 16:17:40 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/29 14:46:14 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/29 20:23:10 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int			ft_free_path(t_path **path, int nb)
 	tmp2 = *path;
 	if (tmp)
 	{
-		ft_printf("Freeing path nb [%d]\n", nb);
 		while (tmp->next)
 		{
 			if (tmp->next->next)
@@ -69,6 +68,7 @@ int			ft_free_path(t_path **path, int nb)
 		}
 		if (tmp->yes == -1 || nb > 0)
 		{
+			ft_printf("Freeing path nb [%d]\n", nb);
 			tmp->size--;
 			while (tmp->size > 0 && tmp->size--)
 				tmp->links[tmp->size] = NULL;
@@ -106,7 +106,8 @@ t_path		*ft_get_path(t_path *first_path, t_map *map, int *i)
 			path->size = 2;
 			break;
 		}
-		(path->yes == 1) ? *i += 1 : *i;
+		(path->yes == 1 && path->size <= map->path_size) ? *i += 1 : *i;
+		// ft_printf("%d\n", i);
 		ft_print_path(first_path, *i);
 	}
 	return (first_path);
@@ -141,10 +142,11 @@ int			main(void)
 	map->start = tmp;
 	ft_printf("ANT nb = %d, NB of R = %d, start Name : %s\n", map->ants,\
 	map->nb_rooms, map->start->name);
+	ft_print_rooms(rooms, 5);
 	if (!(first_path = ft_get_path(first_path, map, &i)))
 		return (-1);
-	if (i > 0)
-		i += 1;
+	// ft_print_path(first_path, 0);
+	(i > 0) ? i += 1 : i;
 	while (i--)
 		ft_free_path(&first_path, 3);
 	while (map->nb_rooms--)
