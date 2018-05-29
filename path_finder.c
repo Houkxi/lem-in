@@ -6,7 +6,7 @@
 /*   By: cfavero <cfavero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 14:34:24 by cfavero           #+#    #+#             */
-/*   Updated: 2018/05/23 19:04:18 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/29 14:46:53 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,39 +38,26 @@ t_path		*ft_close_path(t_path *path, t_path *new)
 	int		k;
 
 	i = 0;
-	// ft_printf("path [%p]\n", path);
 	if (!path || !path->links || !new->links)
 		return (NULL);
-	// while (path->next)
-	// 	path = path->next;
-	// ft_printf("path [%p]\n", path);
-	// ft_printf("path links i [%p], path links i + 1 [%p]\n new links i [%p], new links i + 1 [%p]\n", path, path->links[i + 1], new->links[i], new->links[i + 1]);
-
 	while (path->links[i + 1] && new->links[i + 1] && \
 		path->links[i + 1] == new->links[i + 1])
 		i++;
-	// ft_printf("buuuuu 2 \n");
 	if (i < path->size)
 	{
-		// ft_printf("buuuuu 3\n");
 		k = 0;
 		while (path->links[i]->bridge[k])
 			k++;
-			// ft_printf("buuuuu 4\n");
 		path->links[i]->bridge[k] = path->links[i + 1];
-		// ft_printf("buuuuu 4.3\n");
 		path->links[i]->nb_l--;
-		// ft_printf("buuuuu 4.4\n");
 		k = 0;
 		while (path->links[i]->links[k] && path->links[i]->links[k] != path->links[i + 1])
 			k++;
-		// ft_printf("buuuuu 4.5\n");
 		while (path->links[i]->links[k + 1])
 		{
 			path->links[i]->links[k] = path->links[i]->links[k + 1];
 			k++;
 		}
-		// ft_printf("buuuuu 5\n");
 		path->links[i]->links[k] = NULL;
 	}
 	return (path);
@@ -81,7 +68,6 @@ t_path		*ft_copy_path(t_room **links, t_path *new, int size, int len)
 	t_room	*tmp;
 	int		i;
 
-	ft_printf("cpy path\n");
 	if (!new->links)
 	{
 		if (!(new->links = (t_room**)malloc(sizeof(t_room*) * len)))
@@ -98,7 +84,6 @@ t_path		*ft_copy_path(t_room **links, t_path *new, int size, int len)
 	{
 		if (tmp->nb_l == 1 && tmp->role != 1)
 		{
-			ft_printf("Opening bridges\n");
 			tmp = ft_open_bridges(tmp);
 			break;
 		}
@@ -201,20 +186,18 @@ t_path  *ft_add_path(t_map *map, t_path *path)
 				save = save->next;
 			path = path->next;
 		}
-		// ft_printf("\n------------------------------------++++++++++\n");
-		// ft_print_current_path(new);
-		// ft_printf("----------------------------------------+++++++\n");
 		if (!(new = ft_copy_path(path->links, new, path->size - 1, map->nb_rooms)))
 			return (NULL);
 		if (!(path = ft_close_path(path, new)))
 			return (NULL);
+		if (map->path_size > 0 && map->path_size < path->size)
+			path->yes = -1;
+		else
+			map->path_size = path->size;
 		if ((ft_free_path(&first, 0)) == 0)
 			path = NULL;
 		if (!(new = ft_find_path(new, new->links[new->size - 1], map->nb_rooms)))
 			return (NULL);
-		// ft_printf("\n+++++++++++++++++++++++++++++++++\n");
-		// ft_print_current_path(new);
-		// ft_printf("+++++++++++++++++++++++++++++++++\n");
 		if (path)
 		{
 			path->next = new;
@@ -222,7 +205,6 @@ t_path  *ft_add_path(t_map *map, t_path *path)
 		}
 		else
 		{
-			ft_printf("Bad path modified %p\n", path);
 			path = new;
 			save->next = path;
 		}

@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 18:01:14 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/18 14:49:19 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/29 13:28:20 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,71 +78,37 @@ int			ft_get_info(t_map **ants, t_room **rooms, int fd)
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (!line || !line[0] || line[0] == 'L')
-			return (ft_error(-1, NULL, "Bad file, TRY AGAIN if you Dare"));
+			return (ft_error_str(-1, NULL, "Bad file, TRY AGAIN if you Dare"));
 		while (line && coments_everywhere(line) == 1)
 		{
 			ft_printf("COMS : LINES : %s\n", line);
 			if (!(line = get_line_check(line, fd)))
-				return (-1);
+				return (ft_error_str(-1, NULL, "Freeing line if error"));
 			// get_next_line(fd, &line);
 		}
 		if (ct == 0 && line[0] != '#')
 		{
 			ft_printf("ANTS : LINES : %s\n", line);
 			if (!(*ants = get_ants(*ants, line)))
-				return (-1);
+				return (ft_error_str(-1, NULL, "Freeing line if error"));
 			ct++;
 		}
 		else if (ct == 1 && !(ft_occ_pos(line, ' ') == -1 && line[0] != '#'))
 		{
 			ft_printf("ROOM : LINES : %s\n", line);
 			if (!(line = ft_check_rooms(line, &role, fd)))
-				return (-1);
+				return (ft_error_str(-1, NULL, "Freeing line if error"));
 			if (!(*rooms = get_room(*rooms, line, &role)))
-				return (-1);
+				return (ft_error_str(-1, NULL, "Freeing line if error"));
 		}
 		else
 		{
 			ct++;
 			ft_printf("LINK : LINES : %s\n", line);
 			if (!(*rooms = our_link(*rooms, line, &ct)))
-				return (-1);
+				return (ft_error_str(-1, NULL, "Freeing line if error"));
 		}
 		ft_strdel(&line);
 	}
 	return (0);
 }
-
-/*
-**THERE IS A FUCKING PROBLEM WITH MY ELSE IF !!!
-*I'M TO TIRED TO UNDERSTAND THIS SHIT
-**IT'S 1AM IN THE MORNING BITCH
-
-
-int			ft_get_info(t_map **ants, t_room **rooms, int fd)
-{
-	char	*line;
-	int		ct;
-	int		role;
-
-	line = NULL;
-	ct = 0;
-	role = 0;
-	while (get_next_line(fd, &line) > 0)
-	{
-		if (!line || line[0] == '\0'|| line[0] == 'L')
-			return (ft_error(-1, NULL, "Bad file, TRY AGAIN if you Dare"));
-		else if (!(line = comments(line, fd)))
-			return (ft_error(-1, NULL, "PB with comments"));
-		else if (ct == 0 && !(*ants = checking_ants(*ants, &line, &ct, fd)))
-			return (ft_error(-1, NULL, "PB with ants"));
-		else if (ct == 1 && !(*rooms = the_room(*rooms, line, &ct, fd)))
-			return (ft_error(-1, NULL, line));
-		else if (ct == 2 && !(*rooms = our_link(*rooms, line, &ct)))
-		{
-			return (ft_error(-1, NULL, "PB with links"));
-		}
-	}
-	return (0);
-}
-*/

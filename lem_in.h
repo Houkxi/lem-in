@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 17:37:37 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/23 15:35:03 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/29 14:40:16 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef	struct		s_map
 {
 	int				ants;
 	int				nb_rooms;
+	int				path_size;
 	struct s_room	*start;
 }					t_map;
 typedef struct		s_room
@@ -42,6 +43,11 @@ typedef struct		s_path
 	struct s_path	*next;
 }					t_path;
 
+int					ft_error_str(int ret, char *info, char *s);
+t_path				*ft_first_path(t_path *path, t_room *room, int nb_rooms);
+t_path				*ft_change_path(t_path *path, t_map *map, t_path *first, t_path *save);
+t_path				*ft_new_path(t_path **path, t_path *new, t_map *map);
+int					ft_heed_my_command(t_path *path, t_map *map);
 int					ft_free_path(t_path **path, int nb);
 int					ft_get_info(t_map **ants, t_room **rooms, int fd);
 t_room				*ft_init_room(char **info, int role, int i, t_room *nw_r);

@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 17:48:09 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/18 11:15:34 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/29 13:38:26 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,12 @@ t_map				*get_ants(t_map *ants, char *line)
 		return (NULL);
 	ants->ants = ft_atoi(line);
 	ants->nb_rooms = 0;
+	ants->path_size = -1;
 	ants->start = NULL;
 	return (ants);
 }
 
-t_map				*checking_ants(t_map *ants, char **line, int *ct, int fd)
+int					ft_heed_my_command(t_path *path, t_map *map)
 {
-	char			*new;
-
-	new = *line;
-	if (*ct == 0 && *line[0] != '#')
-	{
-		ft_printf("ANTS ->LINES : %s\n", *line);
-		if (!(ants = get_ants(ants, *line)))
-			return (NULL);
-		get_next_line(fd, &new);
-		*line = new;
-		*ct += 1;
-	}
-	return (ants);
+	return (0);
 }

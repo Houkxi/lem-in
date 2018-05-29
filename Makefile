@@ -6,7 +6,7 @@
 #    By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/14 16:17:39 by mmanley           #+#    #+#              #
-#    Updated: 2018/05/21 13:33:34 by mmanley          ###   ########.fr        #
+#    Updated: 2018/05/29 11:37:55 by mmanley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,7 +83,7 @@ mul : $(NAME)
 	./lem-in < maps/valid_simple/multiple_paths.map
 
 clean :
-	@git rm -rf $(OBJS) objs
+	@rm -rf $(OBJS) objs
 	@cd $(LIB_PATH) && $(MAKE) clean
 	@echo "${WHITE}Lem-in objs		${RED}DEL${WHITE}"
 
