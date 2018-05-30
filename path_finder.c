@@ -6,11 +6,58 @@
 /*   By: cfavero <cfavero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 14:34:24 by cfavero           #+#    #+#             */
-/*   Updated: 2018/05/29 20:18:20 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/30 20:31:26 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+int			ft_find_shortest_path(t_room **links)
+{
+	t_room *room;
+	int i;
+	int k;
+	int j;
+	int nb_r;
+	int nb_l;
+
+	i = 0;
+	k = 0;
+	j = 0;
+	nb_r = 1;
+	while (links[k])
+	{
+		// ft_printf("links[%d]->name [%s]\n", k, links[k]->name);
+		// ft_printf("links[%d]->nb_l [%d]\n", k, links[k]->nb_l);
+		nb_l = links[k]->nb_l;
+		j = 0;
+		while (nb_l--)
+		{
+			// ft_printf("nb_l %d\n", nb_l);
+			// ft_printf("links[%d]name[%s]\n", k, links[k]->name);
+			// ft_printf("links[k]->links[%d]->[%s]\n", j, links[k]->links[j]->name);
+			room = links[k]->links[j];
+			// ft_printf("room [%s]\n", room->name);
+			if (room->len == 0)
+			{
+				room->len = links[k]->len + 1;
+				if (room->role == -1)
+					return (room->len);
+				if (!(links[nb_r] = (t_room*)malloc(sizeof(t_room))))
+					return (-1);
+				links[nb_r] = room;
+				nb_r++;
+			}
+			j++;
+			// ft_printf("j = %d\n", j);
+		}
+		// i++;
+		k++;
+	}
+	// ft_printf("vediamo .. [%s]", links[2]->name);
+	// ft_printf("path_size [%d]", room->len);
+	return (i);
+}
 
 t_room		*ft_open_bridges(t_room *room)
 {
@@ -114,11 +161,12 @@ int     ft_check_around(t_path *path, t_room *room)
 	return (1);
 }
 
-t_path  *ft_find_path(t_path *path, t_room *room, int nb_rooms)
+t_path  *ft_find_path(t_path *path, t_room *room, int nb_rooms, t_map *map)
 {
 	t_room  *tmp;
 	int     i;
 
+	tmp = NULL;
 	if (room->role == 1 && !path->links)
 	{
 		if (!path->links)
@@ -129,7 +177,8 @@ t_path  *ft_find_path(t_path *path, t_room *room, int nb_rooms)
 		path->links[0] = room;
 		path->size = 1;
 	}
-	if (room->role == -1 || (room->nb_l < 2 && room->role != 1))
+	if (room->role == -1 || (room->nb_l < 2 && room->role != 1) \
+		|| (map->path_size < path->size && map->path_size > 0))
 	{
 		if (room->role != -1)
 		{
@@ -141,12 +190,28 @@ t_path  *ft_find_path(t_path *path, t_room *room, int nb_rooms)
 	i = 0;
 	while (room->links[i])
 	{
-		tmp = room->links[i];
-		if (ft_check_around(path, tmp) == 1)
+		if (room->links[i]->role != -1)
+			i++;
+		else
+		{
+			tmp = room->links[i];
 			break;
-		i++;
+		}
 		if (i == room->nb_l)
 			break;
+	}
+	if (!tmp)
+	{
+		i = 0;
+		while (room->links[i])
+		{
+			tmp = room->links[i];
+			if (ft_check_around(path, tmp) == 1)
+				break;
+			i++;
+			if (i == room->nb_l)
+				break;
+		}
 	}
 	if (i == room->nb_l)
 	{
@@ -162,21 +227,20 @@ t_path  *ft_find_path(t_path *path, t_room *room, int nb_rooms)
 	}
 	path->links[path->size] = tmp;
 	path->size += 1;
-	return (ft_find_path(path, tmp, nb_rooms));
+	return (ft_find_path(path, tmp, nb_rooms, map));
 }
 
-t_path  *ft_add_path(t_map *map, t_path *path)
+t_path  *ft_add_path(t_map *map, t_path *path, t_path **first)
 {
 	t_path 	*new;
-	t_path	*first;
 	t_path	*save;
 	int		len;
+	int		k;
 
 	if (!(new = ft_init_path(new)))
 		return (NULL);
 	if (path)
 	{
-		first = path;
 		save = path;
 		while (path->next)
 		{
@@ -184,23 +248,23 @@ t_path  *ft_add_path(t_map *map, t_path *path)
 				save = save->next;
 			path = path->next;
 		}
+		k = 0;
+		if (*first == path)
+			k = 1;
 		if (!(new = ft_copy_path(path->links, new, path->size - 1, map->nb_rooms)))
 			return (NULL);
 		if (!(path = ft_close_path(path, new)))
 			return (NULL);
-		 ft_printf("Path->yes = %d\n", path->yes);
-		if (path && path->yes > 0)
-		{
-			if (map->path_size > 0 && map->path_size < path->size)
-				path->yes = -1;
-			else
-				map->path_size = path->size;
-		}
-		// ft_printf("Path->size = %d, Min path_size = %d\n", path->size, map->path_size);
-		if ((ft_free_path(&first, 0)) == 0)
+		// if (path && path->yes > 0)
+		// {
+		// 	if (map->path_size > 0 && map->path_size < path->size)
+		// 		path->yes = -1;
+		// 	else
+		// 		map->path_size = path->size;
+		// }
+		if ((ft_free_path(&(*first), 0)) == 0)
 			path = NULL;
-		// ft_printf("After free\n");
-		if (!(new = ft_find_path(new, new->links[new->size - 1], map->nb_rooms)))
+		if (!(new = ft_find_path(new, new->links[new->size - 1], map->nb_rooms, map)))
 			return (NULL);
 		if (path)
 		{
@@ -210,11 +274,17 @@ t_path  *ft_add_path(t_map *map, t_path *path)
 		else
 		{
 			path = new;
-			save->next = path;
+			if (k == 0)
+				save->next = path;
+			else
+			{
+				*first = new;
+				save = NULL;
+			}
 		}
 	}
 	else
-		if (!(path = ft_find_path(new, map->start, map->nb_rooms)))
+		if (!(path = ft_find_path(new, map->start, map->nb_rooms, map)))
 			return (NULL);
 	return (path);
 }

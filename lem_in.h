@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 17:37:37 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/29 14:40:16 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/30 19:11:14 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef	struct		s_map
 	int				nb_rooms;
 	int				path_size;
 	struct s_room	*start;
+	struct s_room	**links;
 }					t_map;
 typedef struct		s_room
 {
@@ -30,6 +31,7 @@ typedef struct		s_room
 	int				y;
 	int				open;
 	int				link_chk;
+	int				len;
 	int				nb_l;
 	struct s_room	**links;
 	struct s_room	**bridge;
@@ -43,6 +45,7 @@ typedef struct		s_path
 	struct s_path	*next;
 }					t_path;
 
+int					ft_find_shortest_path(t_room **links);
 int					ft_error_str(int ret, char *info, char *s);
 t_path				*ft_first_path(t_path *path, t_room *room, int nb_rooms);
 t_path				*ft_change_path(t_path *path, t_map *map, t_path *first, t_path *save);
@@ -67,9 +70,9 @@ t_room				*the_room(t_room *rooms, char *line, int *ct, int fd);
 t_map				*get_ants(t_map *ants, char *line);
 char				*get_line_check(char *line, int fd);
 int					lst_check(t_room *rooms);
-t_path 				*ft_add_path(t_map *map, t_path *path);
-void				ft_print_path(t_path *path, int nb);
-void				ft_print_current_path(t_path *path);
+t_path 				*ft_add_path(t_map *map, t_path *path, t_path **first);
+void				ft_print_path(t_path *path_or, int min_size, int nb);
+void				ft_print_current_path(t_path *path_or);
 t_path				*ft_init_path(t_path *new);
 
 #endif

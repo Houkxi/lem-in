@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 13:22:13 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/29 20:20:31 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/30 11:25:54 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_room		*our_link(t_room *rooms, char *line, int *ct)
 		return (NULL);
 	if ((i = ft_tablen(info)) != 2)
 		return (ft_room_error(NULL, info, "PB in our link names"));
-		ft_printf("--LINES : %s\n", line);
+		ft_printf("+LINES : %s\n", line);
 		if (!(rooms = get_links(rooms, info)))
 			return (NULL);
 		return (rooms);

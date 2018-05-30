@@ -6,11 +6,30 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 17:48:09 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/29 16:09:30 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/30 18:02:43 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+int					coments_everywhere(char *line)
+{
+	int				x;
+
+	x = 0;
+	if (!line)
+		return (-1);
+	if (line[x] && line[0] == '#')
+	{
+		while (line[x] && line[x] == '#')
+			x++;
+		if (x == 2)
+			return (2);
+		else
+			return (1);
+	}
+	return (x);
+}
 
 int					ft_check_validity(char *s)
 {
@@ -20,6 +39,8 @@ int					ft_check_validity(char *s)
 
 	x = 0;
 	ct = ft_strlen(s);
+	if (s[x] == '0')
+		return (0);
 	if (ft_atoi(&s[x]) < 0)
 		return (-1);
 	if (s[x])
@@ -53,6 +74,7 @@ t_map				*get_ants(t_map *ants, char *line)
 	ants->nb_rooms = 0;
 	ants->path_size = -1;
 	ants->start = NULL;
+	ants->links = NULL;
 	return (ants);
 }
 

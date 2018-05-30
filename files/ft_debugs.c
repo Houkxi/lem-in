@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:37:14 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/29 16:17:43 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/30 16:29:29 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,27 +49,27 @@ void		ft_print_rooms(t_room *rooms, int details)
 	}
 }
 
-void		ft_print_path(t_path *path_or, int nb)
+void		ft_print_path(t_path *path_or, int min_size, int nb)
 {
 	int		i;
 	int		size;
 	t_path	*path;
 
 	path = path_or;
-	// ft_printf("Printing path!!\n");
-		while (path->next)
-		{
-			path = path->next;
-		// 	// ft_printf("1--%p\n2--%p\n",path, path->next);
-		// 	// ft_printf("Hey\n");
-		}
-		// if (path->yes != 1)
+	// ft_printf("Printing path!! path->next [%p]\n", path->next);
+		// while (path->next)
 		// {
-		// 	ft_printf("Path not good\n");
+		// 	path = path->next;
+		// // 	// ft_printf("1--%p\n2--%p\n",path, path->next);
+		// 	// ft_printf("Hey\n");
+		// }
+		// if (path->yes != 1 || min_size < path->size)
+		// {
+		// 	// ft_printf("Path not good\n");
 		// 	return ;
 		// }
-	// while (path->next)
-	// {
+	while (path->next)
+	{
 		i = 0;
 		ft_printf("--------------------------------------\n");
 		ft_printf("Path size : %d\n", path->size);
@@ -84,15 +84,21 @@ void		ft_print_path(t_path *path_or, int nb)
 			i++;
 		}
 		ft_printf("\n--------------------------------------\n");
-	// 	path = path->next;
-	// }
+		path = path->next;
+	}
 }
 
-void		ft_print_current_path(t_path *path)
+void		ft_print_current_path(t_path *path_or)
 {
 	int		i;
 	int		size;
+	t_path	*path;
 
+	path = path_or;
+	while (path->next)
+	{
+		path = path->next;
+	}
 	ft_printf("*************************************\n");
 	ft_printf("Path size : %d\n", path->size);
 	ft_printf("Path->yes : %d\n", path->yes);

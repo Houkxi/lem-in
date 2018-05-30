@@ -6,7 +6,7 @@
 #    By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/14 16:17:39 by mmanley           #+#    #+#              #
-#    Updated: 2018/05/29 11:37:55 by mmanley          ###   ########.fr        #
+#    Updated: 2018/05/30 11:31:46 by mmanley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ SRCS =	main.c\
 		pars/ft_init_lsts.c\
 		pars/ft_get_links.c\
 		pars/ft_ants_check.c\
-		pars/ft_coment_checks.c\
 		files/ft_checks.c\
 		files/functions.c\
 		files/ft_debugs.c\
