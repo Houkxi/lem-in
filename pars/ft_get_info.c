@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 18:01:14 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/30 11:26:30 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 19:14:05 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_addroom(t_room **alst, t_room *new)
 	}
 }
 
-t_room		*get_room(t_room *rooms, char *line, int *role)
+t_room		*get_room(t_room **rooms, char *line, int *role, t_map *map)
 {
 	t_room	*new_room;
 	char	**info;
@@ -40,72 +40,52 @@ t_room		*get_room(t_room *rooms, char *line, int *role)
 	if (!line || !(info = ft_strsplit(line, ' ')))
 		return (NULL);
 	if ((i = ft_tablen(info)) != 3)
-		return (ft_room_error(NULL, info, line));
+		ft_exit(&(*rooms), &map, NULL);
 	if (!(new_room = ft_init_room(info, *role, 0, NULL)))
-		return (ft_room_error(NULL, info, NULL));
+		ft_exit(&(*rooms), &map, NULL);
 	*role = 0;
-	ft_addroom(&rooms, new_room);
-	return (ft_room_error(rooms, info, NULL));
+	ft_addroom(&(*rooms), new_room);
+	map->nb_rooms += 1;
+	return (ft_room_error(*rooms, info, NULL));
 }
 
-t_room		*the_room(t_room *rooms, char *line, int *ct, int fd)
-{
-	int		role;
-
-	role = 0;
-	if (*ct == 1 && ft_occ_pos(line, ' ') != -1)
-	{
-		if (!(line = ft_check_rooms(line, &role, fd)))
-			return (NULL);
-		if (!(rooms = get_room(rooms, line, &role)))
-			return (NULL);
-	}
-	else
-		*ct += 1;
-	return (rooms);
-}
-
-int			ft_get_info(t_map **ants, t_room **rooms, int fd)
+int			ft_get_info(t_map **map, t_room **rooms, int fd)
 {
 	char	*line;
 	int		ct;
 	int		role;
+	int		ret;
 
 	line = NULL;
 	ct = 0;
 	role = 0;
+	ret = -1;
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (!line || !line[0] || line[0] == 'L')
-			return (ft_error_str(-1, NULL, "Bad file, TRY AGAIN if you Dare"));
-		while (line && coments_everywhere(line) == 1)
+		if ((ret = ft_basic_checks(line, &role, ret)) == -1)
+			return (ft_error_str(-1, line, NULL));
+		if (ret == 1)
 		{
-			ft_printf("COMS : LINES : %s\n", line);
-			if (!(line = get_line_check(line, fd)))
-				return (ft_error_str(-1, NULL, "Freeing line if error"));
-		}
-		if (ct == 0 && line[0] != '#')
-		{
-			ft_printf("*%s\n", line);
-			if (!(*ants = get_ants(*ants, line)))
-				return (ft_error_str(-1, NULL, "Freeing line if error"));
+			if (!(*map = get_ants(*map, line, role)))
+				return (ft_error_str(-1, line, NULL));
 			ct++;
 		}
-		else if (ct == 1 && !(ft_occ_pos(line, ' ') == -1 && line[0] != '#'))
+		else if (ret == 2 && ct == 1)
 		{
-			ft_printf("-%s\n", line);
-			if (!(line = ft_check_rooms(line, &role, fd)))
-				return (ft_error_str(-1, NULL, "Freeing line if error"));
-			if (!(*rooms = get_room(*rooms, line, &role)))
-				return (ft_error_str(-1, NULL, "Freeing line if error"));
+			if (!(get_room(&(*rooms), line, &role, *map)))
+				return (ft_error_str(-1, line, NULL));
 		}
-		else
+		else if (ret == 3)
 		{
-			ct++;
-			if (!(*rooms = our_link(*rooms, line, &ct)))
-				return (ft_error_str(-1, NULL, "Freeing line if error"));
+			if (!(our_link(&(*rooms), line, &ct, role)))
+				return (ft_error_str(-1, line, NULL));
 		}
+		if (ret != 0 && ct < 1 && role != 0)
+			return (ft_error_str(-1, line, NULL));
+		ft_printf("%s\n", line);
 		ft_strdel(&line);
 	}
+	if (ret != 3)
+		return (ft_error_str(-1, NULL, NULL));
 	return (0);
 }

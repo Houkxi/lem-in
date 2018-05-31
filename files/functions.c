@@ -6,23 +6,29 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:36:24 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/29 13:27:21 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 18:56:24 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int			ft_lstlen_test(t_room *lst)
+void		ft_exit(t_room **rooms, t_map **map, t_path **path)
 {
-	int		i;
-
-	i = 0;
-	while (lst->next)
+	/*ft_printf("WANT TO EXIT PLEASE!!\n");
+	ft_printf("N --> %d\n", (*map)->nb_rooms--);
+	if (rooms && *rooms)
+		while ((*map)->nb_rooms--)
+			ft_free_rooms(&(*rooms));
+	if (path && *path)
+		ft_free_path(&(*path), 4, *path, *path);
+	if (map && *map)
 	{
-		i++;
-		lst = lst->next;
-	}
-	return (i);
+		ft_printf("Works");
+		free(*map);
+		*map = NULL;
+	}*/
+	write(2, "Error\n", 6);
+	exit(1);
 }
 
 t_room		*ft_room_error(t_room *ptr, char **info, char *s)
@@ -63,23 +69,4 @@ char		*get_line_check(char *line, int fd)
 		return (NULL);
 	}
 	return (line);
-}
-
-int			lst_check(t_room *rooms)
-{
-	t_room	*tmp;
-	int		ct;
-
-	tmp = rooms;
-	ct = 0;
-	while (tmp)
-	{
-		if (tmp->role == 1 || tmp->role == -1)
-			ct++;
-		tmp = tmp->next;
-	}
-	if (ct != 2)
-		return (-1);
-	else
-		return (0);
 }

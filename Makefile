@@ -6,7 +6,7 @@
 #    By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/14 16:17:39 by mmanley           #+#    #+#              #
-#    Updated: 2018/05/30 11:31:46 by mmanley          ###   ########.fr        #
+#    Updated: 2018/05/31 16:43:57 by mmanley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,8 @@ SRCS =	main.c\
 		files/functions.c\
 		files/ft_debugs.c\
 		path_finder.c\
+		ft_free_stuff.c\
+		finder_functions.c\
 
 OBJS_BASE = $(SRCS:%.c=%.o)
 

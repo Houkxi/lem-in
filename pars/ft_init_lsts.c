@@ -6,21 +6,21 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 19:22:28 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/30 17:59:57 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 18:10:47 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_room			*coord_check(t_room *room, char **info, int i)
+int			coord_check(t_room **room, char **info, int i)
 {
 	if (ft_check_validity(info[1]) == -1 || ft_check_validity(info[2]) == -1)
-		return (ft_room_error(NULL, NULL, "Error in coordonates"));
+		return (-1);
 	if (i == 1)
-		room->x = ft_atoi(info[i]);
+		(*room)->x = ft_atoi(info[i]);
 	if (i == 2)
-		room->y = ft_atoi(info[i]);
-	return (room);
+		(*room)->y = ft_atoi(info[i]);
+	return (1);
 }
 
 t_room			*ft_init_room(char **info, int role, int i, t_room *new_room)
@@ -38,8 +38,12 @@ t_room			*ft_init_room(char **info, int role, int i, t_room *new_room)
 		}
 		if (i == 0)
 			new_room->name = ft_strdup(info[i]);
-		if (!(new_room = coord_check(new_room, info, i)))
-			return (NULL);
+		if ((coord_check(&new_room, info, i)) == -1)
+		{
+			ft_strdel(&new_room->name);
+			free(new_room);
+			return (ft_room_error(NULL, info, NULL));
+		}
 		i++;
 	}
 	new_room->role = role;

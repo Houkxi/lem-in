@@ -6,160 +6,105 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 16:17:40 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/30 20:31:55 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 18:56:26 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		ft_free_map(t_map **map)
-{
-	if (*map)
-	{
-		//ft_printf("Freeing map\n");
-		(*map)->ants = 0;
-		(*map)->nb_rooms = 0;
-		(*map)->path_size = 0;
-		(*map)->start = NULL;
-		// free links;
-		free(*map);
-		*map = NULL;
-	}
-}
-
-void		ft_free_rooms(t_room **rooms)
+int			ft_fill_map(t_map **map, t_room *rooms)
 {
 	t_room	*tmp;
-	int		i;
+	int		len;
 
-	i = 0;
-	tmp = *rooms;
-	if (tmp)
-	{
-		//ft_printf("Freeing room\n");
-		ft_strdel(&tmp->name);
-		tmp->nb_l--;
-		while (tmp->links && tmp->links[tmp->nb_l] && tmp->nb_l < 0 && tmp->nb_l--)
-			tmp->links[tmp->nb_l] = NULL;
-		tmp->nb_l = 0;
-		tmp->len = 0;
-		free(tmp->links);
-		while (tmp->bridge && tmp->bridge[i])
-			tmp->bridge[i++] = NULL;
-		free(tmp->bridge);
-		if (tmp->next)
-			*rooms = tmp->next;
-		free(tmp);
-	}
-}
-
-int			ft_free_path(t_path **path, int nb)
-{
-	t_path	*tmp;
-	t_path	*tmp2;
-
-	tmp = *path;
-	tmp2 = *path;
-	if (tmp)
-	{
-		while (tmp->next)
-		{
-			if (tmp->next->next)
-				tmp2 = tmp2->next;
-			tmp = tmp->next;
-		}
-		if (tmp->yes == -1 || nb > 0)
-		{
-			tmp->size--;
-			while (tmp->size > 0 && tmp->size--)
-				tmp->links[tmp->size] = NULL;
-			tmp->size = 0;
-			free(tmp->links);
-			tmp->links = NULL;
-			free(tmp);
-			if (tmp != tmp2)
-				tmp2->next = NULL;
-			tmp = NULL;
-			return (0);
-		}
-	}
-	return (1);
-}
-
-t_path		*ft_get_path(t_path *first_path, t_map *map, int *i)
-{
-	t_path	*path;
-
-	if (!(map->links = (t_room**)malloc(sizeof(t_room*))))
-		return (NULL);
-	map->links[0] = map->start;
-	/*if ((*/map->path_size = ft_find_shortest_path(map->links);/*) == -1))*/
-		// return (NULL);
-	ft_printf("path_size [%d]\n", map->path_size);
-	while (1)
-	{
-		if (!(path = ft_add_path(map, first_path, &first_path)))
-		{
-			if (first_path)
-				// while ((*i -= 1) > 0)
-					// ft_free_path(&first_path, 2);
-			return (NULL);
-		}
-		if (!first_path)
-			first_path = path;
-		// (first_path == path && first_path->yes == 1) ? map->path_size = first_path->size : map->path_size;
-		if (path && path->size == -1)
-		{
-			path->size = 2;
-			break;
-		}
-		(path->yes == 1 && path->size <= map->path_size + 1) ? *i += 1 : *i;
-		// if (path->yes == 1)
-		// 	ft_print_current_path(first_path);
-	}
-	return (first_path);
-}
-
-int			main(void)
-{
-	t_map	*map;
-	t_room	*rooms;
-	t_room	*tmp;
-	t_path	*first_path;
-	int		i;
-
-	map = NULL;
-	rooms = NULL;
-	first_path = NULL;
-	i = 0;
-	if (ft_get_info(&map, &rooms, 0) == -1)
-	{
-		write(2, "Error\n", 6);
-		return (0);
-	}
 	tmp = rooms;
-	map->nb_rooms = ft_lstlen_test((t_room*)rooms) + 1;
+	(*map)->nb_rooms = ft_lstlen_test((t_room*)rooms) + 1;
 	while (tmp)
 	{
 		if (tmp->role == 1)
 			break ;
 		tmp = tmp->next;
 	}
+	if (!tmp)
+		return (-1);
 	tmp->open = -1;
-	map->start = tmp;
-	map->start->len = 1;
-	//ft_printf("ANT nb = %d, NB of R = %d, start Name : %s\n", map->ants,\
-	map->nb_rooms, map->start->name);
-	// ft_print_rooms(rooms, 5);
-	if (!(first_path = ft_get_path(first_path, map, &i)))
+	(*map)->start = tmp;
+	(*map)->start->len = 1;
+	if (!((*map)->links = (t_room**)malloc(sizeof(t_room*) * (*map)->nb_rooms)))
+		return (-1);
+	len = (*map)->nb_rooms;
+	while (len--)
+		(*map)->links[len] = NULL;
+	(*map)->links[0] = (*map)->start;
+	return (0);
+}
+
+t_path		*ft_get_path(t_path *first_path, t_map *map, int *i, t_room *rooms)
+{
+	t_path	*path;
+	t_path	*new;
+
+	if ((map->path_size = ft_find_shortest_path(map->links, 0, 1)) == -1)
+	{
+		ft_exit(&rooms, &map, &first_path);
+		return (NULL);
+	}
+	while (1)
+	{
+		if (!(new = ft_init_path(new)))
+			ft_exit(&rooms, &map, &first_path);
+		if (!first_path)
+			if (!(path = ft_find(new, map->start, map->nb_rooms, map)))
+				return (NULL);
+		if (!first_path)
+			first_path = path;
+		else if (!(path = ft_add_path(map, first_path, &first_path, new)))
+			ft_exit(&rooms, &map, &first_path);
+		if (path && path->size == -1)
+		{
+			path->size = 2;
+			break ;
+		}
+		(path->yes == 1 && path->size <= map->path_size) ? *i += 1 : *i;
+	}
+	return (first_path);
+}
+
+int			ft_run_forest_run(t_path *first_path, t_map *map, t_room *rooms)
+{
+	int i;
+
+	i = 0;
+	if (!(first_path = ft_get_path(first_path, map, &i, rooms)))
 		return (-1);
 	ft_print_path(first_path, 214748634, 0);
+
 	(i > 0) ? i += 1 : i;
 	while (i--)
-		ft_free_path(&first_path, 3);
+		ft_free_path(&first_path, 1, first_path, first_path);
 	while (map->nb_rooms--)
 		ft_free_rooms(&rooms);
 	ft_free_map(&map);
-	//ft_printf("OVER\n");
+	return (0);
+}
+
+int			main(void)
+{
+	t_map	*map;
+	t_room	*rooms;
+	t_path	*first_path;
+
+	map = NULL;
+	rooms = NULL;
+	first_path = NULL;
+	if (ft_get_info(&map, &rooms, 0) == -1)
+	{
+		ft_exit(&rooms, &map, NULL);
+		return (0);
+	}
+	if (ft_fill_map(&map, rooms) == -1)
+		return (-1);
+	if (ft_run_forest_run(first_path, map, rooms) == -1)
+		return (-1);
 	return (0);
 }

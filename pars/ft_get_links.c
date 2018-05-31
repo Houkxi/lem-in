@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 13:22:13 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/30 11:25:54 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 18:58:28 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int			check_link_name(t_room *rooms, char *link)
 			return (0);
 		tmp = tmp->next;
 	}
-	ft_print_rooms(rooms, -9);
 	return (-1);
 }
 
@@ -73,21 +72,15 @@ t_room		*get_links(t_room *rooms, char **info)
 	tmp = rooms;
 	i = 0;
 	if (check_link_name(rooms, info[i]) == -1)
-	{
-		ft_printf("Problem test\n\n");
-		return (ft_room_error(NULL, info, "Wrong link name, LEARN HOW!!!"));
-	}
+		return (ft_room_error(NULL, info, NULL));
 	if (check_link_name(rooms, info[i + 1]) == -1)
-	{
-		ft_printf("Problem test\n\n");
-		return (ft_room_error(NULL, info, "Wrong link name, LEARN HOW!!!"));
-	}
+		return (ft_room_error(NULL, info, NULL));
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->name, info[i]) == 0 && i < 2)
 		{
 			if (!(tmp = ft_init_links(info[1 - i], tmp->links, tmp, rooms)))
-				return (ft_room_error(NULL, info, "Problem in links"));
+				return (ft_room_error(NULL, info, NULL));
 			if (i == 0)
 				tmp = rooms;
 			if (i == 0)
@@ -98,24 +91,25 @@ t_room		*get_links(t_room *rooms, char **info)
 	return (ft_room_error(rooms, info, NULL));
 }
 
-t_room		*our_link(t_room *rooms, char *line, int *ct)
+t_room		*our_link(t_room **rooms, char *line, int *ct, int role)
 {
 	char	**info;
 	int		i;
 
 	i = 0;
+	if (role != 0)
+		return (ft_room_error(NULL, NULL, NULL));
 	if (*ct != -10)
 	{
-		if (lst_check(rooms) == -1)
-			return (ft_room_error(NULL, NULL, "NEED a start & an end"));
+		if (lst_check(*rooms) == -1)
+			return (ft_room_error(NULL, NULL, NULL));
 		*ct = -10;
 	}
-	if (!line || !rooms || !(info = ft_strsplit(line, '-')))
+	if (!line || !*rooms || !(info = ft_strsplit(line, '-')))
 		return (NULL);
 	if ((i = ft_tablen(info)) != 2)
-		return (ft_room_error(NULL, info, "PB in our link names"));
-		ft_printf("+LINES : %s\n", line);
-		if (!(rooms = get_links(rooms, info)))
+		return (ft_room_error(NULL, info, NULL));
+		if (!(get_links(*rooms, info)))
 			return (NULL);
-		return (rooms);
+		return (*rooms);
 }

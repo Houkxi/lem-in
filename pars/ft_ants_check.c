@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 17:48:09 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/30 18:02:43 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 19:04:13 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int					coments_everywhere(char *line)
 		else
 			return (1);
 	}
-	return (x);
+	return (-1);
 }
 
 int					ft_check_validity(char *s)
@@ -47,6 +47,8 @@ int					ft_check_validity(char *s)
 	{
 		while (s[x] == 32 || (s[x] >= 9 && s[x] <= 13))
 			x++;
+		if (!((s[x] >= 48 && s[x] <= 57)))
+			return (-1);
 		if (s[x] == '+')
 			x++;
 		if (x == 0 || x == 1)
@@ -61,16 +63,18 @@ int					ft_check_validity(char *s)
 	return (0);
 }
 
-t_map				*get_ants(t_map *ants, char *line)
+t_map				*get_ants(t_map *ants, char *line, int role)
 {
 	if (!line || !*line || (ft_check_validity(line)) == -1)
-	{
-		ft_printf("No ants ... PUT SOME !!!\n");
 		return (NULL);
-	}
 	if (!(ants = (t_map*)malloc(sizeof(t_map))))
 		return (NULL);
 	ants->ants = ft_atoi(line);
+	if (ants->ants <= 0)
+	{
+		free(ants);
+		return (NULL);
+	}
 	ants->nb_rooms = 0;
 	ants->path_size = -1;
 	ants->start = NULL;
