@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 18:01:14 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/30 11:26:30 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 10:28:31 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,6 @@ t_room		*get_room(t_room *rooms, char *line, int *role)
 	return (ft_room_error(rooms, info, NULL));
 }
 
-t_room		*the_room(t_room *rooms, char *line, int *ct, int fd)
-{
-	int		role;
-
-	role = 0;
-	if (*ct == 1 && ft_occ_pos(line, ' ') != -1)
-	{
-		if (!(line = ft_check_rooms(line, &role, fd)))
-			return (NULL);
-		if (!(rooms = get_room(rooms, line, &role)))
-			return (NULL);
-	}
-	else
-		*ct += 1;
-	return (rooms);
-}
-
 int			ft_get_info(t_map **ants, t_room **rooms, int fd)
 {
 	char	*line;
@@ -77,27 +60,27 @@ int			ft_get_info(t_map **ants, t_room **rooms, int fd)
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (!line || !line[0] || line[0] == 'L')
-			return (ft_error_str(-1, NULL, "Bad file, TRY AGAIN if you Dare"));
+			return (ft_error_str(-1, line, "Bad file, TRY AGAIN if you Dare"));
 		while (line && coments_everywhere(line) == 1)
 		{
 			ft_printf("COMS : LINES : %s\n", line);
 			if (!(line = get_line_check(line, fd)))
-				return (ft_error_str(-1, NULL, "Freeing line if error"));
+				return (ft_error_str(-1, line, "Freeing line if error"));
 		}
 		if (ct == 0 && line[0] != '#')
 		{
 			ft_printf("*%s\n", line);
 			if (!(*ants = get_ants(*ants, line)))
-				return (ft_error_str(-1, NULL, "Freeing line if error"));
+				return (ft_error_str(-1, line, "Freeing line if error"));
 			ct++;
 		}
 		else if (ct == 1 && !(ft_occ_pos(line, ' ') == -1 && line[0] != '#'))
 		{
 			ft_printf("-%s\n", line);
 			if (!(line = ft_check_rooms(line, &role, fd)))
-				return (ft_error_str(-1, NULL, "Freeing line if error"));
+				return (ft_error_str(-1, line, "Freeing line if error"));
 			if (!(*rooms = get_room(*rooms, line, &role)))
-				return (ft_error_str(-1, NULL, "Freeing line if error"));
+				return (ft_error_str(-1, line, "Freeing line if error"));
 		}
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 19:22:28 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/30 17:59:57 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 10:30:48 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ t_room			*ft_init_room(char **info, int role, int i, t_room *new_room)
 		if (i == 0)
 			new_room->name = ft_strdup(info[i]);
 		if (!(new_room = coord_check(new_room, info, i)))
+		{
+			ft_free_rooms(&new_room);
 			return (NULL);
+		}
 		i++;
 	}
 	new_room->role = role;

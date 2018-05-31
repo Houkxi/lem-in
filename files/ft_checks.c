@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:02:35 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/30 11:24:07 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 10:31:30 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ char				*ft_check_rooms(char *line, int *role, int fd)
 		if (!(line = get_line_check(line, fd)))
 			return (NULL);
 	}
-	ft_printf("-LINES : %s\n", line);
+	// ft_printf("-LINES : %s\n", line);
 	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 16:17:40 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/30 20:31:55 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 10:03:35 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		ft_free_map(t_map **map)
 		(*map)->nb_rooms = 0;
 		(*map)->path_size = 0;
 		(*map)->start = NULL;
-		// free links;
+		// (*map)->links free links;
 		free(*map);
 		*map = NULL;
 	}
@@ -150,7 +150,8 @@ int			main(void)
 	map->start->len = 1;
 	//ft_printf("ANT nb = %d, NB of R = %d, start Name : %s\n", map->ants,\
 	map->nb_rooms, map->start->name);
-	// ft_print_rooms(rooms, 5);
+	ft_print_rooms(rooms, 5);
+	exit(1);
 	if (!(first_path = ft_get_path(first_path, map, &i)))
 		return (-1);
 	ft_print_path(first_path, 214748634, 0);
