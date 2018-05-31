@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 17:37:37 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/30 19:11:14 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 10:56:52 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_path				*ft_change_path(t_path *path, t_map *map, t_path *first, t_path *save)
 t_path				*ft_new_path(t_path **path, t_path *new, t_map *map);
 int					ft_heed_my_command(t_path *path, t_map *map);
 int					ft_free_path(t_path **path, int nb);
+void				ft_free_rooms(t_room **rooms);
+void				ft_exit(t_room **rooms, t_map **map, t_path **path, char *s, int s2);
 int					ft_get_info(t_map **ants, t_room **rooms, int fd);
 t_room				*ft_init_room(char **info, int role, int i, t_room *nw_r);
 void				ft_print_rooms(t_room *rooms, int details);

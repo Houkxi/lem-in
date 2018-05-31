@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:36:24 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/29 13:27:21 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 11:05:13 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,24 @@ int			ft_lstlen_test(t_room *lst)
 		lst = lst->next;
 	}
 	return (i);
+}
+
+void		ft_exit(t_room **rooms, t_map **map, t_path **path, char *s, int s2)
+{
+	ft_printf("WANT TO EXIT PLEASE!!\n");
+	ft_printf("N --> %d\n", s2);
+	if (rooms && *rooms)
+		while ((*map)->nb_rooms--)
+			ft_free_rooms(&(*rooms));
+	if (path && *path)
+		ft_free_path(&(*path), 4);
+	if (map && *map)
+	{
+		ft_printf("Works");
+		free(*map);
+		*map = NULL;
+	}
+	exit (1);
 }
 
 t_room		*ft_room_error(t_room *ptr, char **info, char *s)

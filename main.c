@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 16:17:40 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/31 10:03:35 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/05/31 13:21:36 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ int			main(void)
 	i = 0;
 	if (ft_get_info(&map, &rooms, 0) == -1)
 	{
+		// map->nb_rooms = ft_lstlen_test((t_room*)rooms) + 1;
+		ft_exit(&rooms, &map, NULL, NULL, 0);
 		write(2, "Error\n", 6);
 		return (0);
 	}
@@ -151,7 +153,6 @@ int			main(void)
 	//ft_printf("ANT nb = %d, NB of R = %d, start Name : %s\n", map->ants,\
 	map->nb_rooms, map->start->name);
 	ft_print_rooms(rooms, 5);
-	exit(1);
 	if (!(first_path = ft_get_path(first_path, map, &i)))
 		return (-1);
 	ft_print_path(first_path, 214748634, 0);
