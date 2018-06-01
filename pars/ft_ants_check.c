@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 17:48:09 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/31 19:04:13 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/06/01 11:39:50 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,21 @@ int					ft_check_validity(char *s)
 	long long int	nb;
 
 	x = 0;
-	ct = ft_strlen(s);
-	if (s[x] == '0')
-		return (0);
-	if (ft_atoi(&s[x]) < 0)
-		return (-1);
 	if (s[x])
 	{
-		while (s[x] == 32 || (s[x] >= 9 && s[x] <= 13))
-			x++;
-		if (!((s[x] >= 48 && s[x] <= 57)))
+		ct = ft_strlen(s);
+		nb = ft_atoll(&s[x]);
+		if (ft_alnumbers(s) == -1)
 			return (-1);
-		if (s[x] == '+')
-			x++;
-		if (x == 0 || x == 1)
-			while (s[x] && s[x] == '0')
-				x++;
-		nb = ft_atoi(&s[x]);
-		if (nb < 0)
-			nb *= -1;
-		if (ct - x != rec_nbr_count(nb, 1, 10))
+		if (nb < 0 || nb < INT_MIN || nb > INT_MAX)
 			return (-1);
+		if (s[x] == '0')
+			return (0);
 	}
 	return (0);
 }
 
-t_map				*get_ants(t_map *ants, char *line, int role)
+t_map				*get_ants(t_map *ants, char *line, int role, int *ct)
 {
 	if (!line || !*line || (ft_check_validity(line)) == -1)
 		return (NULL);
@@ -79,6 +68,7 @@ t_map				*get_ants(t_map *ants, char *line, int role)
 	ants->path_size = -1;
 	ants->start = NULL;
 	ants->links = NULL;
+	*ct += 1;
 	return (ants);
 }
 

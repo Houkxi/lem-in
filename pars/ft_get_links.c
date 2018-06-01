@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 13:22:13 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/31 18:58:28 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/06/01 11:54:29 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int			check_link_name(t_room *rooms, char *link)
 t_room		*ft_init_links(char *info, t_room **links, t_room *room, t_room *l)
 {
 	int		i;
-	int		len = 15;
-	t_room	*tmp;
+	int		len;
 
+	len = 15000;
 	i = room->nb_l;
 	if (!links)
 	{
@@ -48,17 +48,16 @@ t_room		*ft_init_links(char *info, t_room **links, t_room *room, t_room *l)
 		while (--len)
 			links[len] = NULL;
 	}
-	tmp = l;
-	while (tmp)
+	while (l)
 	{
-		if (ft_strcmp(tmp->name, info) == 0 && tmp != room)
+		if (ft_strcmp(l->name, info) == 0 && l != room)
 		{
-			if (check_links(links, tmp, i) == -1)
+			if (check_links(links, l, i) == -1)
 				break ;
-			links[room->nb_l] = tmp;
+			links[room->nb_l] = l;
 			room->nb_l += 1;
 		}
-		tmp = tmp->next;
+		l = l->next;
 	}
 	room->links = links;
 	return (room);
@@ -109,7 +108,7 @@ t_room		*our_link(t_room **rooms, char *line, int *ct, int role)
 		return (NULL);
 	if ((i = ft_tablen(info)) != 2)
 		return (ft_room_error(NULL, info, NULL));
-		if (!(get_links(*rooms, info)))
-			return (NULL);
-		return (*rooms);
+	if (!(get_links(*rooms, info)))
+		return (NULL);
+	return (*rooms);
 }

@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:36:24 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/31 18:56:24 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/06/01 15:03:41 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,6 @@
 
 void		ft_exit(t_room **rooms, t_map **map, t_path **path)
 {
-	/*ft_printf("WANT TO EXIT PLEASE!!\n");
-	ft_printf("N --> %d\n", (*map)->nb_rooms--);
-	if (rooms && *rooms)
-		while ((*map)->nb_rooms--)
-			ft_free_rooms(&(*rooms));
-	if (path && *path)
-		ft_free_path(&(*path), 4, *path, *path);
-	if (map && *map)
-	{
-		ft_printf("Works");
-		free(*map);
-		*map = NULL;
-	}*/
 	write(2, "Error\n", 6);
 	exit(1);
 }

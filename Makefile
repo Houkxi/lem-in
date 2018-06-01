@@ -6,7 +6,7 @@
 #    By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/14 16:17:39 by mmanley           #+#    #+#              #
-#    Updated: 2018/05/31 16:43:57 by mmanley          ###   ########.fr        #
+#    Updated: 2018/06/01 11:07:11 by mmanley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,14 +64,23 @@ $(OBJ_PATH)%.o: %.c
 	@gcc -o $@ -c $< -I $(LIB_PATH)/$(INC) -I ./
 
 errors: $(NAME)
-	@echo "${RED}NO COMANDS${WHITE}"
-	./lem-in < maps/errors/no_cmds.map
-	@echo "${RED}WRONG ROOM NAME${WHITE}"
-	./lem-in < maps/errors/l_room_name.map
-	@echo "${RED}WRONG ROOM PLACEMENT${WHITE}"
-	./lem-in < maps/errors/new_room_after_links.map
-	@echo "${RED}NO ANTS${WHITE}"
-	./lem-in < maps/errors/no_ants.map
+	./lem-in < maps/test/err_duplicate.map
+	./lem-in < maps/test/err_3_coordinates.map
+	./lem-in < maps/test/err_letter_in_coordinate.map
+	./lem-in < maps/test/err_link_to_unknown_room.map
+	./lem-in < maps/test/err_no_ants.map
+	./lem-in < maps/test/err_no_ants2.map
+	./lem-in < maps/test/err_no_ants3.map
+	./lem-in < maps/test/err_no_ants3.map
+	./lem-in < maps/test/err_no_end2.map
+	./lem-in < maps/test/err_no_links.map
+	./lem-in < maps/test/err_no_path.map
+	./lem-in < maps/test/err_no_rooms.map
+	./lem-in < maps/test/err_no_start.map
+	./lem-in < maps/test/err_no_start2.map
+	./lem-in < maps/test/err_start_end_same.map
+	./lem-in < maps/test/err_too_few_ants.map
+	./lem-in < maps/test/err_too_many_ants.map
 
 valid: $(NAME)
 	@echo "${GREEN}BASIC TEST${WHITE}"

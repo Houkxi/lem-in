@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 17:37:37 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/31 18:13:48 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/06/01 14:46:56 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct		s_path
 	struct s_path	*next;
 }					t_path;
 
+int					ft_alnumbers(char *s);
 int					ft_basic_checks(char *line, int *role, int ret);
 t_path				*ft_find(t_path *path, t_room *room, int nb_rooms,\
 	t_map *map);
@@ -63,7 +64,7 @@ t_path				*ft_first_path(t_path *path, t_room *room, int nb_rooms);
 t_path				*ft_change_path(t_path *path, t_map *map, t_path *first, t_path *save);
 t_path				*ft_new_path(t_path **path, t_path *new, t_map *map);
 int					ft_heed_my_command(t_path *path, t_map *map);
-int					ft_get_info(t_map **ants, t_room **rooms, int fd);
+int					ft_get_info(t_map **ants, t_room **rooms, int fd, int ct);
 t_room				*ft_init_room(char **info, int role, int i, t_room *nw_r);
 void				ft_print_rooms(t_room *rooms, int details);
 void				ft_print_links(t_room *rooms);
@@ -78,7 +79,7 @@ t_map				*checking_ants(t_map *ants, char **line, int *ct, int fd);
 char				*comments(char *line, int fd);
 t_room				*our_link(t_room **rooms, char *line, int *ct, int role);
 t_room				*the_room(t_room *rooms, char *line, int *ct, int fd);
-t_map				*get_ants(t_map *ants, char *line, int role);
+t_map				*get_ants(t_map *ants, char *line, int role, int *ct);
 char				*get_line_check(char *line, int fd);
 int					lst_check(t_room *rooms);
 t_path 				*ft_add_path(t_map *map, t_path *path, t_path **first,\

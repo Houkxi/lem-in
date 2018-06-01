@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 16:17:40 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/31 18:56:26 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/06/01 15:03:29 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int			main(void)
 	map = NULL;
 	rooms = NULL;
 	first_path = NULL;
-	if (ft_get_info(&map, &rooms, 0) == -1)
+	if (ft_get_info(&map, &rooms, 0, 0) == -1)
 	{
 		ft_exit(&rooms, &map, NULL);
 		return (0);
