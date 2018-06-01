@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 16:02:35 by mmanley           #+#    #+#             */
-/*   Updated: 2018/06/01 14:41:33 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/06/01 15:12:45 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int					ft_info_checks(char **info, int ret, char *line, int *role)
 	if ((chk = coments_everywhere(line)) != -1)
 	{
 		if (chk == 2)
-			*role = ft_check_rooms(line);
+			*role = ft_check_rooms(line, *role);
 		return (0);
 	}
 	else if (ret < 1 && ft_alnumbers(line) != -1)

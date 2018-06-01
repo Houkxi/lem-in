@@ -6,13 +6,13 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 18:01:14 by mmanley           #+#    #+#             */
-/*   Updated: 2018/06/01 15:03:26 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/06/01 19:09:11 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int			ft_check_rooms(char *line)
+int			ft_check_rooms(char *line, int role)
 {
 	if (!line)
 		return (-2);
@@ -20,7 +20,7 @@ int			ft_check_rooms(char *line)
 		return (1);
 	else if (ft_strcmp("##end", line) == 0)
 		return (-1);
-	return (0);
+	return (role);
 }
 
 void		ft_addroom(t_room **alst, t_room *new)
@@ -41,6 +41,22 @@ void		ft_addroom(t_room **alst, t_room *new)
 	}
 }
 
+int			check_room_name(char *name, t_room *rooms)
+{
+	t_room	*tmp;
+
+	tmp = rooms;
+	if (!tmp)
+		return (0);
+	while (tmp)
+	{
+		if (ft_strcmp(name, tmp->name) == 0)
+			return (-1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 t_room		*get_room(t_room **rooms, char *line, int *role, t_map *map)
 {
 	t_room	*new_room;
@@ -51,6 +67,8 @@ t_room		*get_room(t_room **rooms, char *line, int *role, t_map *map)
 	if (!line || !(info = ft_strsplit(line, ' ')))
 		return (NULL);
 	if ((i = ft_tablen(info)) != 3)
+		ft_exit(&(*rooms), &map, NULL);
+	if (check_room_name(info[0], *rooms) == -1)
 		ft_exit(&(*rooms), &map, NULL);
 	if (!(new_room = ft_init_room(info, *role, 0, NULL)))
 		ft_exit(&(*rooms), &map, NULL);
@@ -80,11 +98,11 @@ int			ft_get_info(t_map **map, t_room **rooms, int role, int ct)
 		if (ret == 3)
 			if (!(our_link(&(*rooms), line, &ct, role)))
 				return (ft_error_str(-1, line, NULL));
-		if (ret != 0 && ct < 1 && role != 0)
+		if ((ret != 1 && ct < 1 && role != 0) || role_ch(role, *rooms) == -1)
 			return (ft_error_str(-1, line, NULL));
 		ft_error_str(0, line, line);
 	}
-	if (ret != 3)
-		return (ft_error_str(-1, line, NULL));
+	if (ret != 3 && ct != -10)
+		return (ft_error_str(-1, NULL, NULL));
 	return (0);
 }

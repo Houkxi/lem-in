@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 16:17:40 by mmanley           #+#    #+#             */
-/*   Updated: 2018/06/01 15:03:29 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/06/01 19:14:06 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,7 @@ int			ft_run_forest_run(t_path *first_path, t_map *map, t_room *rooms)
 	i = 0;
 	if (!(first_path = ft_get_path(first_path, map, &i, rooms)))
 		return (-1);
-	ft_print_path(first_path, 214748634, 0);
-
+	ft_heed_my_command(first_path, map, 0, 2);
 	(i > 0) ? i += 1 : i;
 	while (i--)
 		ft_free_path(&first_path, 1, first_path, first_path);
@@ -102,6 +101,7 @@ int			main(void)
 		ft_exit(&rooms, &map, NULL);
 		return (0);
 	}
+	// ft_print_rooms(rooms, 5);
 	if (ft_fill_map(&map, rooms) == -1)
 		return (-1);
 	if (ft_run_forest_run(first_path, map, rooms) == -1)

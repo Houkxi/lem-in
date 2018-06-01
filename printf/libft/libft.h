@@ -6,7 +6,7 @@
 /*   By: cfavero <cfavero@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 18:25:47 by cfavero           #+#    #+#             */
-/*   Updated: 2018/05/09 14:19:53 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/06/01 19:20:04 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,20 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
+# define WHITE		"\x1B[0m"
+# define RED		"\x1B[31m"
+# define ORANGE		"\x1B[91m"
+# define GREEN		"\x1B[32m"
+# define LGREEN		"\x1B[92m"
+# define YELLOW		"\x1B[33m"
+# define LYELLOW	"\x1B[93m"
+# define BLUE		"\x1B[34m"
+# define MAGENTA	"\x1B[35m"
+# define LMAGENTA	"\x1B[95m"
+# define CYAN		"\x1B[36m"
+# define LCYAN		"\x1B[96m"
+# define BLACK		"\x1b[30m"
+# define BOLD		"\x1b[1m"
 
 typedef struct		s_list
 {

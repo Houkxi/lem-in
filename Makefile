@@ -6,13 +6,13 @@
 #    By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/14 16:17:39 by mmanley           #+#    #+#              #
-#    Updated: 2018/06/01 11:07:11 by mmanley          ###   ########.fr        #
+#    Updated: 2018/06/01 17:02:12 by mmanley          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem-in
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 
 LIB = libftprintf.a
 
@@ -90,7 +90,37 @@ valid: $(NAME)
 
 mul : $(NAME)
 	@echo "${GREEN}MULTIPLE TEST${WHITE}"
+
+	valgrind --track-origins=yes --leak-check=full ./lem-in < maps/valid_simple/multiple_paths.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/1.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/10.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/10_lots_of_comments.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/2.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/20.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/5.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/9_path_depth_10_ants.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/9_path_depth_1_ants.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/9_path_depth_2_ants.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/9_path_depth_4_ants.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/9_path_depth_8_ants.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/9_path_depth_9_ants.map
+	valgrind --track-origins=yes --leak-check=full 	./lem-in < maps/test/loop.map
+	valgrind --track-origins=yes --leak-check=full ./lem-in < maps/test/10k.map
 	./lem-in < maps/valid_simple/multiple_paths.map
+	./lem-in < maps/test/1.map
+	./lem-in < maps/test/10.map
+	./lem-in < maps/test/10_lots_of_comments.map
+	./lem-in < maps/test/2.map
+	./lem-in < maps/test/20.map
+	./lem-in < maps/test/5.map
+	./lem-in < maps/test/9_path_depth_10_ants.map
+	./lem-in < maps/test/9_path_depth_1_ants.map
+	./lem-in < maps/test/9_path_depth_2_ants.map
+	./lem-in < maps/test/9_path_depth_4_ants.map
+	./lem-in < maps/test/9_path_depth_8_ants.map
+	./lem-in < maps/test/9_path_depth_9_ants.map
+	./lem-in < maps/test/loop.map
+	./lem-in < maps/test/10k.map
 
 clean :
 	@rm -rf $(OBJS) objs

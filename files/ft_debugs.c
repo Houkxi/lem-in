@@ -6,11 +6,29 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 14:37:14 by mmanley           #+#    #+#             */
-/*   Updated: 2018/05/31 16:42:04 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/06/01 19:08:34 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+int			role_ch(int role, t_room *rooms)
+{
+	t_room	*tmp;
+
+	tmp = rooms;
+	if (!tmp)
+		return (0);
+	if (role == 0)
+		return (1);
+	while (tmp->next)
+	{
+		if (tmp->role == role)
+			return (-1);
+		tmp = tmp->next;
+	}
+	return (1);
+}
 
 void		ft_print_links(t_room *rooms)
 {

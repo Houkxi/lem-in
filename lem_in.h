@@ -6,7 +6,7 @@
 /*   By: mmanley <mmanley@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 17:37:37 by mmanley           #+#    #+#             */
-/*   Updated: 2018/06/01 14:46:56 by mmanley          ###   ########.fr       */
+/*   Updated: 2018/06/01 19:13:49 by mmanley          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct		s_path
 	struct s_path	*next;
 }					t_path;
 
+int					role_ch(int role, t_room *rooms);
 int					ft_alnumbers(char *s);
 int					ft_basic_checks(char *line, int *role, int ret);
 t_path				*ft_find(t_path *path, t_room *room, int nb_rooms,\
@@ -63,14 +64,14 @@ int					ft_error_str(int ret, char *info, char *s);
 t_path				*ft_first_path(t_path *path, t_room *room, int nb_rooms);
 t_path				*ft_change_path(t_path *path, t_map *map, t_path *first, t_path *save);
 t_path				*ft_new_path(t_path **path, t_path *new, t_map *map);
-int					ft_heed_my_command(t_path *path, t_map *map);
+int					ft_heed_my_command(t_path *path, t_map *map, int k, int ro);
 int					ft_get_info(t_map **ants, t_room **rooms, int fd, int ct);
 t_room				*ft_init_room(char **info, int role, int i, t_room *nw_r);
 void				ft_print_rooms(t_room *rooms, int details);
 void				ft_print_links(t_room *rooms);
 t_room				*get_links(t_room *rooms, char **info);
 int					ft_check_validity(char *s);
-int					ft_check_rooms(char *line);
+int					ft_check_rooms(char *line, int role);
 int					coments_everywhere(char *line);
 int					ft_lstlen_test(t_room *lst);
 t_room				*ft_room_error(t_room *ptr, char **info, char *s);
