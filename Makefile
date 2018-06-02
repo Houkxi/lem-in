@@ -39,7 +39,7 @@ SRCS =	main.c\
 		files/functions.c\
 		files/ft_debugs.c\
 		path_finder.c\
-		ft_free_stuff.c\
+		files/ft_free_stuff.c\
 		finder_functions.c\
 
 OBJS_BASE = $(SRCS:%.c=%.o)

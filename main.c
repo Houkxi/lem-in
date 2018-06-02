@@ -101,7 +101,7 @@ int			main(void)
 		ft_exit(&rooms, &map, NULL);
 		return (0);
 	}
-	// ft_print_rooms(rooms, 5);
+	ft_print_rooms(rooms, 5);
 	if (ft_fill_map(&map, rooms) == -1)
 		return (-1);
 	if (ft_run_forest_run(first_path, map, rooms) == -1)

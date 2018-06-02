@@ -1,20 +1,18 @@
-#test
+#Testring
+#Or not
+#
 6
-5 5 5
 2 2 2
 ##start
 1 1 1
-##Othercmd
+#coment1
 3 3 3
 ##end
 4 4 4
 2-1
+3-4
 2-3
-1-2
-1-5
 #coment2
-1-4
 1-3
 4-2
-5-4
-3-5
+1-4

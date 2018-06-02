@@ -80,12 +80,14 @@ t_room		*get_links(t_room *rooms, char **info)
 		{
 			if (!(tmp = ft_init_links(info[1 - i], tmp->links, tmp, rooms)))
 				return (ft_room_error(NULL, info, NULL));
-			if (i == 0)
-				tmp = rooms;
+			(i == 0) ? tmp = rooms : 0;
 			if (i == 0)
 				i++;
+			else
+				break ;
 		}
-		tmp = tmp->next;
+		if (!(ft_strcmp(rooms->name, info[i]) == 0 && i == 1))
+			tmp = tmp->next;
 	}
 	return (ft_room_error(rooms, info, NULL));
 }
