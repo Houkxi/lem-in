@@ -17,7 +17,7 @@ It is presented as an ant colony where we will have to make a certain amount of 
 ## Input file
 
 The input file has specific rules that have to be followed or it will be considered an error.
-This way of work brings forward the idea of ```markup languages``` ( example : *XML*).
+This brings forward the idea of ```markup languages``` ( example : *XML*).
 
 Input file example :
 
